@@ -50,14 +50,14 @@ void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimate_pixelPointer
 }
 
 void write_EVA_BLK_RGB(FILE *fichier, pixel_structure *penultimate_pixelPointer, pixel_structure *ultimate_pixelPointer, pixel_structure cache[64]){
-    fwrite(0xFE, sizeof(int), 1, fichier);
+    fwrite('0xFE', sizeof(int), 1, fichier);
     fwrite((*ultimate_pixelPointer).r, sizeof(int), 1, fichier);
     fwrite((*ultimate_pixelPointer).g, sizeof(int), 1, fichier);
     fwrite((*ultimate_pixelPointer).b, sizeof(int), 1, fichier);
 }
 
 void write_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimate_pixelPointer, pixel_structure *ultimate_pixelPointer, pixel_structure cache[64]){
-    fwrite(0xFF, sizeof(int), 1, fichier);
+    fwrite('0xFF', sizeof(int), 1, fichier);
 }
 
 void writeHeader(FILE *fichier, PPM_IMG* img){
