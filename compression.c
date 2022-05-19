@@ -6,15 +6,24 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
     penultimate_pixel.g = 0;
     penultimate_pixel.b = 0;
     pixel_structure cache[64];
-    int i, j;
+    int i, j, same;
     for(i=1;i<=ppmGetHeight(img);i++){
         for(j=1;j<=ppmGetWidth(img);j++){
-            //blabla
-        }
+            write_EVA_BLK_SAME(penultimate_pixel,ultimate_pixel);
+        } 
     }
 }
 
-int write_EVA_BLK_SAME(){
+void write_EVA_BLK_SAME(pixel_structure penultimate_pixel, pixel_structure ultimate_pixel){
+    int same;
+    same = ComparePixels(penultimate_pixel, ultimate_pixel);
+            if(same == 1){
+                //algorithme de SAME
+                }
+            else  {write_EVA_BLK_INDEX(penultimate_pixel,ultimate_pixel);}
+}
+
+void write_EVA_BLK_INDEX(){
 
 }
 
