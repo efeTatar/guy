@@ -15,8 +15,8 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
     int CIP = 0, *CIP_Pointer = NULL;
     CIP_Pointer = &CIP;
     int i, j;
-    for(i=1;i<=ppmGetHeight(img);i++){
-        for(j=1;j<=ppmGetWidth(img);j++){
+    for(i=1;i<ppmGetHeight(img);i++){
+        for(j=1;j<ppmGetWidth(img);j++){
             dec = ppmRead(img, j, i);
             DecimalToHex(Hex, dec);
             HexToRGB(Hex, ultimate_pixelPointer);
