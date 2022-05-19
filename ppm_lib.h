@@ -177,6 +177,11 @@
     void HexToRGB(char tab[6], pixel_structure *pixel);
     void DecimalToHex(char tab[6], int dec);
     int ComparePixels(pixel_structure *penultimate_pixel, pixel_structure *ultimate_pixel);
+    void writeHeader(FILE *fichier, PPM_IMG* img);
+    void compressionManager(FILE *fichier, PPM_IMG* img);
+    void write_EVA_BLK_SAME(pixel_structure *penultimate_pixelPointer, pixel_structure *ultimate_pixelPointer, int *CIP_Pointer);
+    void write_EVA_BLK_INDEX(pixel_structure *penultimate_pixelPointer, pixel_structure *ultimate_pixelPointer);
+    
     
 #endif
 
