@@ -49,22 +49,6 @@ void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimate_pixelPointer
     write_EVA_BLK_RGB(fichier, penultimate_pixelPointer,ultimate_pixelPointer);
 }
 
-void write_EVA_BLK_INDEX(FILE *fichier, pixel_structure *penultimate_pixelPointer, pixel_structure *ultimate_pixelPointer, pixel_structure cache[64]){
-    int index;
-    index = (3*(*ultimate_pixelPointer).r + 5*(*ultimate_pixelPointer).g + 7*(*ultimate_pixelPointer).b)%64;
-    fwrite(&index, sizeof(int), 1, fichier);
-
-    write_EVA_BLK_DIFF(fichier, penultimate_pixelPointer,ultimate_pixelPointer, cache);
-}
-
-void write_EVA_BLK_DIFF(FILE *fichier, pixel_structure *penultimate_pixelPointer, pixel_structure *ultimate_pixelPointer, pixel_structure cache[64]){
-    write_EVA_BLK_DIFF(fichier, penultimate_pixelPointer,ultimate_pixelPointer, cache);
-}
-
-void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimate_pixelPointer, pixel_structure *ultimate_pixelPointer){
-    write_EVA_BLK_DIFF(fichier, penultimate_pixelPointer,ultimate_pixelPointer, cache);
-}
-
 void write_EVA_BLK_RGB(FILE *fichier, pixel_structure *penultimate_pixelPointer, pixel_structure *ultimate_pixelPointer, pixel_structure cache[64]){
     fwrite(0xFE, sizeof(int), 1, fichier);
     fwrite((*ultimate_pixelPointer).r, sizeof(int), 1, fichier);
