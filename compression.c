@@ -24,7 +24,7 @@ void write_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimate_pixelPointer
                 *CIP_Pointer++;
                 //algorithme de SAME
             }
-            else  {write_EVA_BLK_INDEX(fichier, penultimate_pixelPointer,ultimate_pixelPointer, cache);}
+            else  {write_EVA_BLK_INDEX(fichier, penultimate_pixelPointer,ultimate_pixelPointer, CIP_Pointer, cache);}
 }
 
 void write_EVA_BLK_INDEX(FILE *fichier, pixel_structure *penultimate_pixelPointer, 
