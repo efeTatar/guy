@@ -25,9 +25,6 @@ int main(){
     HexToRGB(Hex, penultimate_pixelPointer);
     printf("RGB(%d, %d, %d)\n", penultimate_pixel.r, penultimate_pixel.g, penultimate_pixel.b);
 
-    int CIP;
-    int *CIP_pointer;
-
     //FILE *fichier = NULL;
 	//fichier = fopen("blabla", "wb+");
     //fclose(fichier);
