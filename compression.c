@@ -9,6 +9,7 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
     penultimate_pixelPointer = &penultimate_pixel;
     ultimate_pixelPointer = &ultimate_pixel;
     int dec;
+    int test = 0;
     char Hex[6] = " ";
     pixel_structure cache[64]; int index;
 
@@ -21,15 +22,16 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
             DecimalToHex(Hex, dec);
             HexToRGB(Hex, ultimate_pixelPointer);
             write_EVA_BLK_SAME(fichier, penultimate_pixelPointer,ultimate_pixelPointer, CIP_Pointer, cache);
+            test++;
             penultimate_pixel = ultimate_pixel;
         } 
     }
+    printf("%d", test);
 }
 
 void write_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimate_pixelPointer, 
                         pixel_structure *ultimate_pixelPointer, int *CIP_Pointer, pixel_structure cache[64]){
     int same;
-    printf("same");
     same = ComparePixels(penultimate_pixelPointer, ultimate_pixelPointer);
             if(same == 1){
                 *CIP_Pointer++;
