@@ -10,21 +10,21 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
     int i, j, same;
     for(i=1;i<=ppmGetHeight(img);i++){
         for(j=1;j<=ppmGetWidth(img);j++){
-            write_EVA_BLK_SAME(penultimate_pixel,ultimate_pixel);
+            write_EVA_BLK_SAME(penultimate_pixelPointer,ultimate_pixelPointer);
         } 
     }
 }
 
-void write_EVA_BLK_SAME(pixel_structure penultimate_pixel, pixel_structure ultimate_pixel){
+void write_EVA_BLK_SAME(pixel_structure *penultimate_pixelPointer, pixel_structure *ultimate_pixelPointer){
     int same;
-    same = ComparePixels(penultimate_pixel, ultimate_pixel);
+    same = ComparePixels(penultimate_pixelPointer, ultimate_pixelPointer);
             if(same == 1){
                 //algorithme de SAME
                 }
-            else  {write_EVA_BLK_INDEX(penultimate_pixel,ultimate_pixel);}
+            else  {write_EVA_BLK_INDEX(penultimate_pixelPointer,ultimate_pixelPointer);}
 }
 
-void write_EVA_BLK_INDEX(){
+void write_EVA_BLK_INDEX(pixel_structure *penultimate_pixelPointer, pixel_structure *ultimate_pixelPointer){
 
 }
 
