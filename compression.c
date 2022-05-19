@@ -8,6 +8,8 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
     penultimate_pixel.b = 0;
     penultimate_pixelPointer = &penultimate_pixel;
     ultimate_pixelPointer = &ultimate_pixel;
+    int dec;
+    char Hex[6] = " ";
     pixel_structure cache[64]; int index;
 
     int CIP = 0, *CIP_Pointer = NULL;
@@ -15,6 +17,9 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
     int i, j;
     for(i=1;i<=ppmGetHeight(img);i++){
         for(j=1;j<=ppmGetWidth(img);j++){
+            dec = ppmRead(img, j, i);
+            DecimalToHex(Hex, dec);
+            HexToRGB(Hex, ultimate_pixelPointer);
             write_EVA_BLK_SAME(fichier, penultimate_pixelPointer,ultimate_pixelPointer, CIP_Pointer, cache);
             penultimate_pixel = ultimate_pixel;
         } 

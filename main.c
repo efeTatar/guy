@@ -11,7 +11,7 @@ int main(){
     penultimate_pixel.b = 0;
 
     PPM_IMG* img = NULL;
-    img = ppmOpen("calvinhobbes.ppm");
+    img = ppmOpen("sf2");
     //FILE *fichier = NULL;
     int x = 1, y = 1;
 	int total = 0;
