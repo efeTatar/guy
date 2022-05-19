@@ -25,6 +25,8 @@ int main(){
     HexToRGB(Hex, penultimate_pixelPointer);
     printf("RGB(%d, %d, %d)\n", penultimate_pixel.r, penultimate_pixel.g, penultimate_pixel.b);
     printf("Hello Efe\n");
+
+    int nbrIdenticalConsecutivePixels, *nbrIdenticalConsecutivePixels;;
 	
     ppmClose(img);
     //fclose(fichier);
