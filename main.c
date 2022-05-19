@@ -26,6 +26,7 @@ int main(){
     pixelPointer = &penultimate_pixel;
     HexToRGB(Hex, pixelPointer);
     printf("RGB(%d, %d, %d)\n", penultimate_pixel.r, penultimate_pixel.g, penultimate_pixel.b);
+    printf("hello");
 	
     ppmClose(img);
     //fclose(fichier);
