@@ -24,7 +24,6 @@ int main(){
     penultimate_pixelPointer = &penultimate_pixel;
     HexToRGB(Hex, penultimate_pixelPointer);
     printf("RGB(%d, %d, %d)\n", penultimate_pixel.r, penultimate_pixel.g, penultimate_pixel.b);
-    printf("Hello Efe\n");
 
     int CIP;
     int *CIP_pointer;

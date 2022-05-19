@@ -6,6 +6,12 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
     penultimate_pixel.g = 0;
     penultimate_pixel.b = 0;
     pixel_structure cache[64];
+    int i, j;
+    for(i=1;i<=ppmGetHeight(img);i++){
+        for(j=1;j<=ppmGetWidth(img);j++){
+            //blabla
+        }
+    }
 }
 
 int write_EVA_BLK_SAME(){
