@@ -24,6 +24,7 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
 void write_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimate_pixelPointer, 
                         pixel_structure *ultimate_pixelPointer, int *CIP_Pointer, pixel_structure cache[64]){
     int same;
+    printf("same");
     same = ComparePixels(penultimate_pixelPointer, ultimate_pixelPointer);
             if(same == 1){
                 *CIP_Pointer++;
