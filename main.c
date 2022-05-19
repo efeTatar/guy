@@ -25,9 +25,10 @@ int main(){
     HexToRGB(Hex, penultimate_pixelPointer);
     printf("RGB(%d, %d, %d)\n", penultimate_pixel.r, penultimate_pixel.g, penultimate_pixel.b);
 
-    //FILE *fichier = NULL;
-	//fichier = fopen("blabla", "wb+");
-    //fclose(fichier);
+    FILE *fichier = NULL;
+	fichier = fopen("blabla", "wb+");
+    compressionManager(fichier, img);
+    fclose(fichier);
 
     ppmClose(img);
     return 0;
