@@ -16,6 +16,7 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
     int CIP = 0, *CIP_Pointer = NULL;
     CIP_Pointer = &CIP;
     int i, j;
+    writeHeader(fichier, img);
     for(i=0;i<ppmGetHeight(img);i++){
         for(j=0;j<ppmGetWidth(img);j++){
             dec = ppmRead(img, j, i);
