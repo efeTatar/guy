@@ -34,6 +34,5 @@ int main(){
     //fclose(fichier);
 
     ppmClose(img);
-    //fclose(fichier);
     return 0;
 }

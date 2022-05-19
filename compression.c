@@ -1,10 +1,11 @@
 #include "ppm_lib.h"
 
-void compressionManager(pixel_structure *ultimate_pixelPointer, pixel_structure *penultimate_pixelPointer,
-                        FILE *fichier, PPM_IMG* img){
+void compressionManager(FILE *fichier, PPM_IMG* img){
+    pixel_structure penultimate_pixel, ultimate_pixel;
+    penultimate_pixel.r = 0;
+    penultimate_pixel.g = 0;
+    penultimate_pixel.b = 0;
     pixel_structure cache[64];
-    
-    
 }
 
 int write_EVA_BLK_SAME(){
