@@ -31,36 +31,40 @@ void write_EVA_BLK_INDEX(FILE *fichier, pixel_structure *penultimate_pixelPointe
                         pixel_structure *ultimate_pixelPointer, int *CIP_Pointer, pixel_structure cache[64]){
     int index;
     index = (3*(*ultimate_pixelPointer).r + 5*(*ultimate_pixelPointer).g + 7*(*ultimate_pixelPointer).b)%64;
-    if(ComparePixels(cache[index], ultimate_pixelPointer)==1){
+    if(ComparePixels((cache+index), ultimate_pixelPointer)==1){
         fwrite(&index, sizeof(int), 1, fichier);    
     }
     else{
-        write_EVA_BLK_DIFF(fichier, penultimate_pixelPointer,ultimate_pixelPointer);
+        write_EVA_BLK_DIFF(fichier, penultimate_pixelPointer,ultimate_pixelPointer, CIP_Pointer, cache);
     }
 }
 
-void write_EVA_BLK_DIFF(FILE *fichier, pixel_structure *penultimate_pixelPointer, pixel_structure *ultimate_pixelPointer){
+void write_EVA_BLK_DIFF(FILE *fichier, pixel_structure *penultimate_pixelPointer, 
+                        pixel_structure *ultimate_pixelPointer, int *CIP_Pointer, pixel_structure cache[64]){
     int r_diff, g_diff, b_diff;
     r_diff = (*penultimate_pixelPointer).r - (*ultimate_pixelPointer).r;
-    write_EVA_BLK_LUMA(fichier, penultimate_pixelPointer,ultimate_pixelPointer);
+    write_EVA_BLK_LUMA(fichier, penultimate_pixelPointer,ultimate_pixelPointer, CIP_Pointer, cache);
 }
 
-void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimate_pixelPointer, pixel_structure *ultimate_pixelPointer){
-    write_EVA_BLK_RGB(fichier, penultimate_pixelPointer,ultimate_pixelPointer);
+void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimate_pixelPointer, 
+                        pixel_structure *ultimate_pixelPointer, int *CIP_Pointer, pixel_structure cache[64]){
+    write_EVA_BLK_RGB(fichier, penultimate_pixelPointer,ultimate_pixelPointer, CIP_Pointer, cache);
 }
 
-void write_EVA_BLK_RGB(FILE *fichier, pixel_structure *penultimate_pixelPointer, pixel_structure *ultimate_pixelPointer, pixel_structure cache[64]){
-    fwrite('0xFE', sizeof(int), 1, fichier);
-    fwrite((*ultimate_pixelPointer).r, sizeof(int), 1, fichier);
-    fwrite((*ultimate_pixelPointer).g, sizeof(int), 1, fichier);
-    fwrite((*ultimate_pixelPointer).b, sizeof(int), 1, fichier);
+void write_EVA_BLK_RGB(FILE *fichier, pixel_structure *penultimate_pixelPointer, 
+                        pixel_structure *ultimate_pixelPointer, int *CIP_Pointer, pixel_structure cache[64]){
+    fwrite("0xFE", sizeof(int), 1, fichier);
+    fwrite(&ultimate_pixelPointer->r, sizeof(int), 1, fichier);
+    fwrite(&ultimate_pixelPointer->g, sizeof(int), 1, fichier);
+    fwrite(&ultimate_pixelPointer->b, sizeof(int), 1, fichier);
 }
 
-void write_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimate_pixelPointer, pixel_structure *ultimate_pixelPointer, pixel_structure cache[64]){
-    fwrite('0xFF', sizeof(int), 1, fichier);
+void write_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimate_pixelPointer, 
+                        pixel_structure *ultimate_pixelPointer, int *CIP_Pointer, pixel_structure cache[64]){
+    fwrite("0xFF", sizeof(int), 1, fichier);
 }
 
-void writeHeader(FILE *fichier, PPM_IMG* img){
+void writeHeader(FILE *fichier, PPM_IMG *img){
     int w = ppmGetWidth (img),
         h = ppmGetHeight(img),
         rng = ppmGetColors(img),
@@ -70,5 +74,5 @@ void writeHeader(FILE *fichier, PPM_IMG* img){
     fwrite(&h, sizeof(int), 1, fichier);
     fwrite(&rng, sizeof(int), 1, fichier);
     fwrite(&nbColors, sizeof(int), 1, fichier);
-} 
+}
 
