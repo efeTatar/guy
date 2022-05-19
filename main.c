@@ -27,7 +27,11 @@ int main(){
     printf("Hello Efe\n");
 
     int nbrIdenticalConsecutivePixels, *nbrIdenticalConsecutivePixels;;
-	
+
+    //FILE *fichier = NULL;
+	//fichier = fopen("blabla", "wb+");
+    //fclose(fichier);
+
     ppmClose(img);
     //fclose(fichier);
     return 0;
