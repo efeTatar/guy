@@ -26,7 +26,7 @@ int main(){
     printf("RGB(%d, %d, %d)\n", penultimate_pixel.r, penultimate_pixel.g, penultimate_pixel.b);
     printf("Hello Efe\n");
 
-    int nbrIdenticalConsecutivePixels, *nbrIdenticalConsecutivePixels;;
+    int nbrIdenticalConsecutivePixels, *nbrIdenticalConsecutivePixels;
 
     //FILE *fichier = NULL;
 	//fichier = fopen("blabla", "wb+");
