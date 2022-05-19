@@ -2,7 +2,7 @@
 
 void compressionManager(FILE *fichier, PPM_IMG* img){
     pixel_structure penultimate_pixel, ultimate_pixel
-                    ,*penultimate_pixelPointer, *ultimate_pixelPointer;;
+                    ,*penultimate_pixelPointer, *ultimate_pixelPointer;
     penultimate_pixel.r = 0;
     penultimate_pixel.g = 0;
     penultimate_pixel.b = 0;
