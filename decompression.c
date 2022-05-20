@@ -1,7 +1,7 @@
 #include "ppm_lib.h"
 
 void decompressionManager(FILE *fichier){
-    PPM_IMG* img = NULL;
+    PPM_IMG *img = NULL;
     int w, h, rng, nbColours;
     fread(&w, sizeof(int), 1, fichier);
     fread(&h, sizeof(int), 1, fichier);
@@ -25,7 +25,12 @@ void decompressionManager(FILE *fichier){
     
 }
 
-void detecter_EVA_BK_RGB();
+void detecter_EVA_BK_RGB(FILE *fichier, PPM_IMG *img, int i, int j, pixel_structure penultimate, pixel_structure ultimate){
+    fread(&ultimate.r, sizeof(int), 1, fichier);
+    fread(&ultimate.g, sizeof(int), 1, fichier);
+    fread(&ultimate.b, sizeof(int), 1, fichier);
+    //ppmWrite(img, i, j, value);
+}
 
 int direction(FILE *ficher){
     int value;

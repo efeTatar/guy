@@ -34,15 +34,15 @@ void write_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimatePointer,
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]){
     int same;
     same = ComparePixels(penultimatePointer, ultimatePointer);
-            if(same == 1){
-                *CIP_Pointer++;
-                if(*CIP_Pointer==62){*CIP_Pointer +=191; fwrite(CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
-            }
-            else
-            {
-                if(*CIP_Pointer>0){*CIP_Pointer +=191; fwrite(CIP_Pointer, sizeof(int), 1, fichier);}
-                write_EVA_BLK_INDEX(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
-            }
+    if(same == 1){
+        *CIP_Pointer++;
+        if(*CIP_Pointer==62){*CIP_Pointer +=191; fwrite(*CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
+        return;
+    }
+    else{
+        if(*CIP_Pointer>0){*CIP_Pointer +=191; fwrite(*CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
+        write_EVA_BLK_INDEX(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
+    }
 }
 
 void write_EVA_BLK_INDEX(FILE *fichier, pixel_structure *penultimatePointer, 
@@ -51,6 +51,7 @@ void write_EVA_BLK_INDEX(FILE *fichier, pixel_structure *penultimatePointer,
     index = (3*(*ultimatePointer).r + 5*(*ultimatePointer).g + 7*(*ultimatePointer).b)%64;
     if(ComparePixels((cache+index), ultimatePointer)==1){
         fwrite(&index, sizeof(int), 1, fichier);    
+        return;
     }
     else{
         write_EVA_BLK_DIFF(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
@@ -77,7 +78,10 @@ void write_EVA_BLK_DIFF(FILE *fichier, pixel_structure *penultimatePointer,
         (value & 0x03) == g_diff;
         value = value << 2;
         (value & 0x03) == b_diff;
+        value += 0x01; 
+        
         fwrite(&value, sizeof(unsigned int), 1, fichier);
+        return;
     }
     else{
         write_EVA_BLK_LUMA(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
@@ -104,6 +108,7 @@ void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
         (value & 0xF) == r_diff-g_diff + 8;
         value = value << 4;
         (value & 0xF) == b_diff-g_diff + 8;
+        return;
     }
     else{
         write_EVA_BLK_RGB(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
