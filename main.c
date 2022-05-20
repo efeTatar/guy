@@ -29,6 +29,9 @@ int main(){
 	fichier = fopen("blabla", "wb+");
     compressionManager(fichier, img);
     fclose(fichier);
+    fichier = fopen("blabla", "wr");
+    
+    fclose(fichier);
 
     ppmClose(img);
     return 0;
