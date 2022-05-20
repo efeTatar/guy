@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu May 19 15:18:26 2022
+# Make data base, printed on Fri May 20 16:17:15 2022
 
 # Variables
 
@@ -51,7 +53,7 @@ SNAP_DATA = /var/snap/code/97
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:54347
+JOURNAL_STREAM = 8:51704
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # environment
@@ -77,7 +79,7 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 _ = /snap/code/97/usr/share/code/code
 # environment
-MANAGERPID = 1918
+MANAGERPID = 2097
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
@@ -93,7 +95,7 @@ PATH = /opt/gradle/bin:/opt/gradle/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/student-laptop:@/tmp/.ICE-unix/2137,unix/student-laptop:/tmp/.ICE-unix/2137
+SESSION_MANAGER = local/student-laptop:@/tmp/.ICE-unix/2311,unix/student-laptop:/tmp/.ICE-unix/2311
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -111,7 +113,7 @@ DISABLE_WAYLAND = 1
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 59277c530fb14bc29a57ae8cbe9a31a2
+INVOCATION_ID = 949cd20694254def8d49b658b296ba82
 # environment
 GDK_PIXBUF_MODULEDIR = /snap/code/97/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # default
@@ -123,7 +125,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 8767
+GIO_LAUNCHED_DESKTOP_FILE_PID = 2764
 # automatic
 %F = $(notdir $%)
 # environment
@@ -137,7 +139,7 @@ PWD = /home/cytech/ProjetS2/guy
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 2095
+SSH_AGENT_PID = 2271
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -155,7 +157,7 @@ VSCODE_CODE_CACHE_PATH = /home/cytech/.config/Code/CachedData/c3511e6c69bb39013c
 # environment
 LOGNAME = cytech
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # environment
@@ -189,7 +191,7 @@ SHLVL = 0
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-4ab8c792-e82d-42c0-91f4-dc98c6d40b51.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-10a45fd1-cabf-4b80-8cc2-9a44f4f42bd8.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -275,7 +277,7 @@ _VIRTUALENVWRAPPER_API =  mkvirtualenv rmvirtualenv lsvirtualenv showvirtualenv 
 # environment
 LANG = C
 # environment
-VSCODE_PID = 8817
+VSCODE_PID = 2810
 # variable set hash-table stats:
 # Load=133/1024=13%, Rehash=0, Collisions=24/158=15%
 
@@ -285,9 +287,10 @@ VSCODE_PID = 8817
 
 # Directories
 
-# . (device 66309, inode 7083172): 13 files, no impossibilities.
+ 
+# . (device 66309, inode 7083172): 14 files, no impossibilities.
 
-# 13 files, no impossibilities in 1 directories.
+# 14 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -336,9 +339,6 @@ EXO: exe
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
- 
-make: *** No rule to make target 'all'.  Stop.
-
 #  Last modified 2022-05-19 15:09:48.435247086
 #  File has been updated.
 #  Successfully updated.
@@ -420,9 +420,9 @@ ppm_lib.c:
 # strcache buffers: 1 (0) / strings = 26 / storage = 253 B / avg = 9 B
 # current buf: size = 8162 B / used = 253 B / count = 26 / avg = 9 B
 
-# strcache performance: lookups = 54 / hit rate = 51%
+# strcache performance: lookups = 55 / hit rate = 52%
 # hash-table stats:
-# Load=26/8192=0%, Rehash=0, Collisions=1/54=2%
-# Finished Make data base on Thu May 19 15:18:26 2022
+# Load=26/8192=0%, Rehash=0, Collisions=1/55=2%
+# Finished Make data base on Fri May 20 16:17:15 2022
 
  
