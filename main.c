@@ -11,7 +11,7 @@ int main(){
     penultimate_pixel.b = 0;
 
     PPM_IMG* img = NULL;
-    img = ppmOpen("sf2.ppm");
+    img = ppmOpen("tvchart.ppm");
     FILE *fichier = NULL;
 	fichier = fopen("blabla", "wb+");
     compressionManager(fichier, img);

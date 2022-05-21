@@ -24,7 +24,7 @@ void decompressionManager(FILE *fichier){
 
     // i->y & j->x 
     int i = 1, j = 1; int *x, *y; x=&i; y=&j;
-    while(debugCount<10 && j<h){ 
+    while(debugCount<10 && j<800){ 
         type_determiner(fichier, img, x, y, penultimatePointeur, c, ultimatePointeur, cache, w, h);
     }
 
@@ -37,7 +37,7 @@ void detected_EVA_BK_SAME(unsigned int byte, PPM_IMG *img, pixel_structure *ulti
     while(repeat!=0){
         ppmWrite(img, (*i), (*j), pixel((*penultimate).r, (*penultimate).g, (*penultimate).r));
         (*i)++;
-        if((*i)=w){(*i)=0;(*j)++;}       
+        if((*i)=w){(*i)=1;(*j)++;}       
         repeat--;
     }
 }
@@ -110,7 +110,7 @@ void type_determiner(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structur
         case 0x3:
             if( (byte & 0xFE) == 0xFE ){
                 detected_EVA_BK_RGB(fichier, img, i, j, ultimatePointeur, cache);
-                if((*i)=w){(*i)=0;(*j)++;}
+                if((*i)=w){(*i)=1;(*j)++;}
                 break;
             }
             if( (byte & 0xFF) == 0xFF ){
@@ -122,17 +122,17 @@ void type_determiner(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structur
 
         case 0x0:
             detected_EVA_BK_INDEX(byte, img, ultimatePointeur, cache, i, j);
-            if((*i)=w){(*i)=0;(*j)++;}
+            if((*i)=w){(*i)=1;(*j)++;}
             break;
 
         case 0x1:
             detected_EVA_BK_DIFF(byte, img, ultimatePointeur, penultimatePointeur, i, j, cache);
-            if((*i)=w){(*i)=0;(*j)++;}
+            if((*i)=w){(*i)=1;(*j)++;}
             break;
 
         case 0x2:
             detected_EVA_BK_LUMA(fichier, byte, img, ultimatePointeur, penultimatePointeur, i, j, cache);
-            if((*i)=w){(*i)=0;(*j)++;}
+            if((*i)=w){(*i)=1;(*j)++;}
             break;
     }
 }
