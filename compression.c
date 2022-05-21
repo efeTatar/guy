@@ -36,11 +36,11 @@ void write_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimatePointer,
     same = ComparePixels(penultimatePointer, ultimatePointer);
     if(same == 1){
         *CIP_Pointer++;
-        if(*CIP_Pointer==62){*CIP_Pointer +=191; fwrite(*CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
+        if(*CIP_Pointer==62){CIP_Pointer +=191; fwrite(*CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
         return;
     }
     else{
-        if(*CIP_Pointer>0){*CIP_Pointer +=191; fwrite(*CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
+        if(*CIP_Pointer>0){CIP_Pointer +=191; fwrite(*CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
         write_EVA_BLK_INDEX(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
     }
 }
