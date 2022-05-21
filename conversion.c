@@ -1,17 +1,19 @@
 #include "ppm_lib.h"
 
 void HexToRGB(char tab[6], pixel_structure *pixel){
-	
+	(*pixel).r = 0;
 	if(tab[1]>=65){(*pixel).r += tab[1]-55;}
 		else{(*pixel).r += tab[1]-48;}
     if(tab[0]>=65){(*pixel).r += (tab[0]-55)*16;}
 		else{(*pixel).r += (tab[0]-48)*16;}
     
+	(*pixel).g = 0;
     if(tab[3]>=65){(*pixel).g += tab[3]-55;}
 		else{(*pixel).g += tab[3]-48;}
     if(tab[2]>=65){(*pixel).g += (tab[2]-55)*16;}
 		else{(*pixel).g += (tab[2]-48)*16;}
-		
+	
+	(*pixel).b = 0;
 	if(tab[5]>=65){(*pixel).b += tab[5]-55;}
 		else{(*pixel).b += tab[5]-48;}
     if(tab[4]>=65){(*pixel).b += (tab[4]-55)*16;}

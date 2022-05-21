@@ -23,8 +23,8 @@ void decompressionManager(FILE *fichier){
     int debugCount = 0, *c; c=&debugCount;
 
     // i->y & j->x 
-    int i = 1, j = 1; int *x, *y; x=&i; y=&j;
-    while(debugCount<10 || j<h){ 
+    int i = 0, j = 0; int *x, *y; x=&i; y=&j;
+    while(debugCount<10 && j<800){ 
         type_determiner(fichier, img, x, y, penultimatePointeur, c, ultimatePointeur, cache, w, h);
     }
 
