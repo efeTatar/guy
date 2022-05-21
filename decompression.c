@@ -7,6 +7,7 @@ void decompressionManager(FILE *fichier){
     fread(&h, sizeof(int), 1, fichier);
     fread(&rng, sizeof(int), 1, fichier);
     fread(&nbColours, sizeof(int), 1, fichier);
+    printf("\n%d\n", rng);
     img = ppmNew(w, h, rng, nbColours);
 
     pixel_structure penultimate, ultimate;
@@ -22,8 +23,8 @@ void decompressionManager(FILE *fichier){
     int debugCount = 0, *c; c=&debugCount;
 
     // i->y & j->x 
-    int i, j; int *x, *y; x=&i; y=&j;
-    while(debugCount<10){ 
+    int i = 1, j = 1; int *x, *y; x=&i; y=&j;
+    while(debugCount<10 && j<h){ 
         type_determiner(fichier, img, x, y, penultimatePointeur, c, ultimatePointeur, cache, w, h);
     }
 
@@ -131,6 +132,7 @@ void type_determiner(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structur
 
         case 0x2:
             detected_EVA_BK_LUMA(fichier, byte, img, ultimatePointeur, penultimatePointeur, i, j, cache);
+            if((*i)=w){(*i)=0;(*j)++;}
             break;
     }
 }
