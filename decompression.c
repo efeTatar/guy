@@ -65,8 +65,12 @@ void detected_EVA_BK_DIFF(unsigned int byte, PPM_IMG *img, pixel_structure *ulti
     (*i)++;
 }
 
-void detected_EVA_BK_LUMA(){
-    
+void detected_EVA_BK_LUMA(unsigned int byte, PPM_IMG *img, pixel_structure *ultimate, pixel_structure *penultimate, int *i, int *j){
+    unsigned int byte2; int diffG;
+    byte2 = byte<<2;
+    byte2 = byte2>>2;
+    diffG = byte2;
+    (*ultimate).g = (*penultimate).g + diffG - 32;
 }
 
 void detected_EVA_BK_RGB(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structure *ultimate){
