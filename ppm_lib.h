@@ -191,7 +191,9 @@
     void write_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]);
     void writeHeader(FILE *fichier, PPM_IMG *img);
-
+    void decompressionManager(FILE *fichier);
+    int direction(FILE *ficher);
+    void detecter_EVA_BK_RGB();
     
     void decompressionManager(FILE *fichier);
     void detected_EVA_BK_SAME(unsigned int byte, PPM_IMG *img, pixel_structure *ultimate, pixel_structure *penultimate, int *i, int *j, int w);

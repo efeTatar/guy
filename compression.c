@@ -9,26 +9,30 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
     penultimatePointer = &penultimate;
     ultimatePointer = &ultimate;
     int dec;
-    int test = 0;
     pixel_structure cache[64]; int index;
     char Hex[6] = " ";
 
     int CIP = 0, *CIP_Pointer = NULL;
     CIP_Pointer = &CIP;
-    int i, j;
+    int i, j; int k;
+    int w = ppmGetWidth(img);
+    int h = ppmGetHeight(img);
     writeHeader(fichier, img);
-    for(i=0;i<ppmGetHeight(img);i++){
-        for(j=0;j<ppmGetWidth(img);j++){
-            dec = ppmRead(img, j, i);
+    for(j=1;j<h;j++){   
+        for(i=1;i<w;i++){
+            dec = ppmRead(img, i, j);
             DecimalToHex(Hex, dec);
+            //for(k=0;k<6;k++){printf("%c", Hex[k]);}
             HexToRGB(Hex, ultimatePointer);
+            //printf("(%d %d %d)", (*penultimatePointer).r, (*penultimatePointer).g, (*penultimatePointer).b);
+            //printf("(%d %d %d)", (*ultimatePointer).r, (*ultimatePointer).g, (*ultimatePointer).b);
             write_EVA_BLK_SAME(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
             index = (3*(*ultimatePointer).r + 5*(*ultimatePointer).g + 7*(*ultimatePointer).b)%64;
             cache[index] = ultimate;
-            test++;
             penultimate = ultimate;
-            //printf("(%d,%d) ", j, i);
+            printf("(%d,%d) \n", i, j);
         } 
+        if((j%100)==0){printf("#");}
     }
 }
 
@@ -38,13 +42,13 @@ void write_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimatePointer,
     same = ComparePixels(penultimatePointer, ultimatePointer);
 
     if(same == 1){
-        printf("same");
+        //printf("same");
         *CIP_Pointer++;
-        if(*CIP_Pointer==62){*CIP_Pointer +=193; fwrite(CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
+        if(*CIP_Pointer==62){*CIP_Pointer +=191; fwrite(CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
         return;
     }
     else{
-        if(*CIP_Pointer>0){*CIP_Pointer +=193; fwrite(CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
+        if(*CIP_Pointer>0){*CIP_Pointer +=191; fwrite(CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
         write_EVA_BLK_INDEX(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
     }
 }
@@ -55,7 +59,7 @@ void write_EVA_BLK_INDEX(FILE *fichier, pixel_structure *penultimatePointer,
     index = (3*(*ultimatePointer).r + 5*(*ultimatePointer).g + 7*(*ultimatePointer).b)%64;
     if(ComparePixels((cache+index), ultimatePointer)==1){
         fwrite(&index, sizeof(int), 1, fichier);  
-        printf("index"); 
+        //printf("index"); 
         return;
     }
     else{
@@ -79,7 +83,7 @@ void write_EVA_BLK_DIFF(FILE *fichier, pixel_structure *penultimatePointer,
     byte = byte | gdiff;
     byte = byte << 2;
     byte = byte | bdiff;
-    if(check==1){printf("DIFF");fwrite(&byte, sizeof(int), 1, fichier); return;}
+    if(check==1){/*printf("DIFF");*/fwrite(&byte, sizeof(int), 1, fichier); return;}
     write_EVA_BLK_LUMA(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
 }
 
@@ -101,7 +105,7 @@ void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
     unsigned int byte2;
     byte2 = rdiff; byte2 = byte2 << 4;
     byte2 = byte2 | bdiff; 
-    if(check==1){printf("luma");fwrite(&byte2, sizeof(int), 1, fichier); return;}
+    if(check==1){/*printf("luma");*/fwrite(&byte2, sizeof(int), 1, fichier); return;}
     write_EVA_BLK_RGB(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
 }
 
@@ -111,7 +115,7 @@ void write_EVA_BLK_RGB(FILE *fichier, pixel_structure *penultimatePointer,
     fwrite(&ultimatePointer->r, sizeof(int), 1, fichier);
     fwrite(&ultimatePointer->g, sizeof(int), 1, fichier);
     fwrite(&ultimatePointer->b, sizeof(int), 1, fichier);
-    printf("rgb");
+    //printf("rgb");
 }
 
 void write_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimatePointer, 
