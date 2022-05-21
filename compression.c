@@ -130,8 +130,8 @@ void write_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimatePointer,
 void writeHeader(FILE *fichier, PPM_IMG *img){
     int w = ppmGetWidth (img),
         h = ppmGetHeight(img),
-        rng = ppmGetColors(img),
-        nbColors = ppmGetRange (img);
+        rng = ppmGetRange (img),
+        nbColors = ppmGetColors(img);
 
     fwrite(&w, sizeof(int), 1, fichier);
     fwrite(&h, sizeof(int), 1, fichier);

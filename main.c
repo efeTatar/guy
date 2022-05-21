@@ -29,10 +29,10 @@ int main(){
 	fichier = fopen("blabla", "wb+");
     compressionManager(fichier, img);
     fclose(fichier);
-    fichier = fopen("blabla", "wr");
-    
-    fclose(fichier);
-
     ppmClose(img);
+    fichier = fopen("blabla", "wr");
+    decompressionManager(fichier);
+    fclose(fichier);
+    ppmSave(img, "/");
     return 0;
 }
