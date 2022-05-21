@@ -27,7 +27,6 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
             penultimate = ultimate;
         } 
     }
-    printf("%d", test);
 }
 
 void write_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimatePointer, 
@@ -132,7 +131,7 @@ void writeHeader(FILE *fichier, PPM_IMG *img){
         h = ppmGetHeight(img),
         rng = ppmGetRange (img),
         nbColors = ppmGetColors(img);
-
+    printf("\n%d", rng);
     fwrite(&w, sizeof(int), 1, fichier);
     fwrite(&h, sizeof(int), 1, fichier);
     fwrite(&rng, sizeof(int), 1, fichier);

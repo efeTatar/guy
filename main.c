@@ -12,25 +12,13 @@ int main(){
 
     PPM_IMG* img = NULL;
     img = ppmOpen("sf2.ppm");
-    //FILE *fichier = NULL;
-    int x = 1, y = 1;
-	int total = 0;
-	int dec;
-    printf("%d\n", ppmRead(img, x, y));
-    dec = ppmRead(img, x, y);
-    char Hex[6] = " ";
-    DecimalToHex(Hex, dec);
-    
-    penultimate_pixelPointer = &penultimate_pixel;
-    HexToRGB(Hex, penultimate_pixelPointer);
-    printf("RGB(%d, %d, %d)\n", penultimate_pixel.r, penultimate_pixel.g, penultimate_pixel.b);
-
     FILE *fichier = NULL;
 	fichier = fopen("blabla", "wb+");
     compressionManager(fichier, img);
     fclose(fichier);
     ppmClose(img);
-    fichier = fopen("blabla", "wr");
+    rewind(fichier);
+    fichier = fopen("blabla", "rb");
     decompressionManager(fichier);
     fclose(fichier);
     ppmSave(img, "/");
