@@ -111,7 +111,7 @@ void write_EVA_BLK_RGB(FILE *fichier, pixel_structure *penultimatePointer,
     fwrite(&ultimatePointer->r, sizeof(int), 1, fichier);
     fwrite(&ultimatePointer->g, sizeof(int), 1, fichier);
     fwrite(&ultimatePointer->b, sizeof(int), 1, fichier);
-    //printf("rgb");
+    printf("rgb");
 }
 
 void write_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimatePointer, 
