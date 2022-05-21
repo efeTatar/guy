@@ -10,20 +10,21 @@ void decompressionManager(FILE *fichier){
     img = ppmNew(w, h, rng, nbColours);
 
     pixel_structure penultimate, ultimate;
-    pixel_structure penultimatePointeur, ultimatePointeur;
+    pixel_structure *penultimatePointeur, *ultimatePointeur;
+    penultimatePointeur = &penultimate;
+    ultimatePointeur = &ultimate;
     pixel_structure *cache; int index;
     cache = malloc(64 * sizeof(pixel_structure));
     penultimate.r = 0;
     penultimate.g = 0;
     penultimate.b = 0;
 
-    int debugCount = 0;
+    int debugCount = 0, *c; c=&debugCount;
 
     // i->y & j->x 
-    int i, j;
-
+    int i, j; int *x, *y; x=&i; y=&j;
     while(debugCount<10){ 
-        type_determiner();
+        type_determiner(fichier, img, x, y, penultimatePointeur, c, ultimatePointeur, cache, w, h);
     }
 
     free(cache);
@@ -31,11 +32,12 @@ void decompressionManager(FILE *fichier){
 
 void detected_EVA_BK_SAME(unsigned int byte, PPM_IMG *img, pixel_structure *ultimate, pixel_structure *penultimate, int *i, int *j, int w){
     int repeat; 
-    repeat = byte;
+    repeat = byte - 64;
     while(repeat!=0){
         ppmWrite(img, (*i), (*j), pixel((*penultimate).r, (*penultimate).g, (*penultimate).r));
         (*i)++;
         if((*i)=w){(*i)=0;(*j)++;}       
+        repeat--;
     }
 }
 
@@ -46,76 +48,89 @@ void detected_EVA_BK_INDEX(unsigned int byte, PPM_IMG *img, pixel_structure *ult
     (*i)++;
 }
 
-void detected_EVA_BK_DIFF(unsigned int byte, PPM_IMG *img, pixel_structure *ultimate, pixel_structure *penultimate, int *i, int *j){
+void detected_EVA_BK_DIFF(unsigned int byte, PPM_IMG *img, pixel_structure *ultimate, pixel_structure *penultimate, int *i, int *j, pixel_structure cache[64]){
     int diff;
-    unsigned int byte2;
-    byte2 = byte;
-    byte2 = byte2 << 2;
-    diff = byte2 >> 6;
+    unsigned byte2 = 207;
+    diff = (byte | byte2) ^ byte2;
     (*ultimate).r = (*penultimate).r - 2 + diff;
-    byte2 = byte;
-    byte2 = byte2 << 4;
-    diff = byte2 >> 6;
+
+    byte2 = 243;
+    diff = (byte | byte2) ^ byte2;
     (*ultimate).g = (*penultimate).g - 2 + diff;
-    byte2 = byte;
-    byte2 = byte2 << 6;
-    diff = byte2 >> 6;
+
+    byte2 = 252;
+    diff = (byte | byte2) ^ byte2;
     (*ultimate).b = (*penultimate).b - 2 + diff;
+
     ppmWrite(img, (*i), (*j), pixel((*ultimate).r, (*ultimate).g, (*ultimate).r));
+    int index = (3*(*ultimate).r + 5*(*ultimate).g + 7*(*ultimate).b)%64;
+    cache[index] = (*ultimate);
     (*i)++;
 }
 
-void detected_EVA_BK_LUMA(unsigned int byte, PPM_IMG *img, pixel_structure *ultimate, pixel_structure *penultimate, int *i, int *j){
-    unsigned int byte2; int diffG;
-    byte2 = byte<<2;
-    byte2 = byte2>>2;
-    diffG = byte2;
-    (*ultimate).g = (*penultimate).g + diffG - 32;
+void detected_EVA_BK_LUMA(FILE *fichier, unsigned int byte, PPM_IMG *img, pixel_structure *ultimate, pixel_structure *penultimate, int *i, int *j, pixel_structure cache[64]){
+    unsigned int byte2 = 192;
+    int diffg = (byte | byte2) ^ byte2;
+    (*ultimate).g = (*penultimate).g - 32 + diffg;
+    fread(&byte, sizeof(int), 1, fichier); 
+    byte2 = 15;
+    int diff;
+    diff = (byte | byte2) ^ byte2; diff = diff - 8 + diffg;
+    (*ultimate).r = (*penultimate).r + diff;
+    byte2 = 240;
+    diff = (byte | byte2) ^ byte2; diff = diff - 8 + diffg;
+    (*ultimate).b = (*penultimate).b + diff;
+    ppmWrite(img, (*i), (*j), pixel((*ultimate).r, (*ultimate).g, (*ultimate).r));
+    int index = (3*(*ultimate).r + 5*(*ultimate).g + 7*(*ultimate).b)%64;
+    cache[index] = (*ultimate);
+    (*i)++;
 }
 
-void detected_EVA_BK_RGB(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structure *ultimate){
+void detected_EVA_BK_RGB(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structure *ultimate, pixel_structure cache[64]){
     fread(&(*ultimate).r, sizeof(int), 1, fichier);
     fread(&(*ultimate).g, sizeof(int), 1, fichier);
     fread(&(*ultimate).b, sizeof(int), 1, fichier);
     ppmWrite(img, (*i), (*j), pixel((*ultimate).r, (*ultimate).g, (*ultimate).r));
+    int index = (3*(*ultimate).r + 5*(*ultimate).g + 7*(*ultimate).b)%64;
+    cache[index] = (*ultimate);
     (*i)++;
 }
 
-void detected_EVA_BK_DEBUG(){
-    //
+void detected_EVA_BK_DEBUG(int *debugCount){
+    (*debugCount)++;
 }
 
-void type_determiner(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structure penultimatePointeur, 
-                    pixel_structure ultimatePointeur, pixel_structure cache[64], int w, int h){
+void type_determiner(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structure *penultimatePointeur, int *debugCount,
+                    pixel_structure *ultimatePointeur, pixel_structure cache[64], int w, int h){
     unsigned int byte, check_byte;
     fread(&byte, sizeof(int), 1, fichier);
     check_byte = byte >> 6;
     switch(check_byte){
         case 0x3:
             if( (byte & 0xFE) == 0xFE ){
-                //RGB
+                detected_EVA_BK_RGB(fichier, img, i, j, ultimatePointeur, cache);
                 if((*i)=w){(*i)=0;(*j)++;}
                 break;
             }
             if( (byte & 0xFF) == 0xFF ){
-                //DEBUG
+                detected_EVA_BK_DEBUG(debugCount);
                 break;
             }
-            //SAME
+            detected_EVA_BK_SAME(byte, img, ultimatePointeur, penultimatePointeur, i, j, w);
             break;
 
         case 0x0:
-            //INDEX
+            detected_EVA_BK_INDEX(byte, img, ultimatePointeur, cache, i, j);
             if((*i)=w){(*i)=0;(*j)++;}
             break;
 
         case 0x1:
-            //DIFF
+            detected_EVA_BK_DIFF(byte, img, ultimatePointeur, penultimatePointeur, i, j, cache);
             if((*i)=w){(*i)=0;(*j)++;}
             break;
 
         case 0x2:
-            //LUMA
+            detected_EVA_BK_LUMA(fichier, byte, img, ultimatePointeur, penultimatePointeur, i, j, cache);
             break;
     }
 }
