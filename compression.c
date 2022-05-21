@@ -71,15 +71,13 @@ void write_EVA_BLK_DIFF(FILE *fichier, pixel_structure *penultimatePointer,
     if(intervalCheck==1){
         r_diff += 2; g_diff += 2; b_diff += 2;
         unsigned int value = 0;
-        (value & 0x03) == 0x01;
-        value = value << 2;
-        (value & 0x03) == r_diff;
-        value = value << 2;
-        (value & 0x03) == g_diff;
-        value = value << 2;
-        (value & 0x03) == b_diff;
-        value += 0x01; 
-        
+        value += 0x01;
+        value = value << 2; 
+        value += r_diff;
+        value = value << 2; 
+        value += g_diff;
+        value = value << 2; 
+        value += b_diff;
         fwrite(&value, sizeof(unsigned int), 1, fichier);
         return;
     }
