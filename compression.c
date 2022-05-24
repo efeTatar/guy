@@ -9,7 +9,8 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
     penultimatePointer = &penultimate;
     ultimatePointer = &ultimate;
     int dec;
-    pixel_structure cache[64]; int index;
+    pixel_structure *cache; int index;
+    cache = malloc(64*sizeof(pixel_structure));
     char Hex[6] = " ";
 
     int CIP = 0, *CIP_Pointer = NULL;
@@ -32,7 +33,6 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
             penultimate = ultimate;
             printf("(%d,%d) \n", i, j);
         } 
-        if((j%100)==0){printf("#");}
     }
 }
 
@@ -41,14 +41,17 @@ void write_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimatePointer,
     int same;
     same = ComparePixels(penultimatePointer, ultimatePointer);
 
-    if(same == 1){
-        //printf("same");
+    if(same == 1 && *CIP_Pointer != 62){
+        printf("same");
         *CIP_Pointer++;
-        if(*CIP_Pointer==62){*CIP_Pointer +=191; fwrite(CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
         return;
     }
     else{
-        if(*CIP_Pointer>0){*CIP_Pointer +=191; fwrite(CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
+        if(*CIP_Pointer>0){
+            *CIP_Pointer +=191; 
+            fwrite(CIP_Pointer, sizeof(int), 1, fichier); 
+            *CIP_Pointer = 0;
+        }
         write_EVA_BLK_INDEX(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
     }
 }
@@ -100,6 +103,7 @@ void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
     byte = 3; byte = byte << 6;
     gdiff+=32; byte = byte | gdiff;
     fwrite(&byte, sizeof(int), 1, fichier);
+    if(check==1){fwrite(&byte, sizeof(int), 1, fichier);}
     rdiff = bdiff - gdiff - 32 + 8;
     bdiff = bdiff - gdiff - 32 + 8;
     unsigned int byte2;
