@@ -26,7 +26,7 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
             HexToRGB(Hex, ultimatePointer);
             //printf("(%d %d %d)", (*penultimatePointer).r, (*penultimatePointer).g, (*penultimatePointer).b);
             //printf("(%d %d %d)", (*ultimatePointer).r, (*ultimatePointer).g, (*ultimatePointer).b);
-            write_EVA_BLK_INDEX(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
+            write_EVA_BLK_SAME(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
             index = (3*(*ultimatePointer).r + 5*(*ultimatePointer).g + 7*(*ultimatePointer).b)%64;
             cache[index] = ultimate;
             penultimate = ultimate;
@@ -43,13 +43,16 @@ void write_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimatePointer,
     if(same == 1){
         //printf("same");
         *CIP_Pointer++;
-        if(*CIP_Pointer==62){*CIP_Pointer +=191; fwrite(CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
+        if((*CIP_Pointer)==62){
+            (*CIP_Pointer) += 191;
+            fwrite(CIP_Pointer, sizeof(int), 1, fichier); 
+            (*CIP_Pointer) = 0;
+        }
+        return;
         return;
     }
-    else{
-        if(*CIP_Pointer>0){*CIP_Pointer +=191; fwrite(CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
-        write_EVA_BLK_INDEX(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
-    }
+    if(*CIP_Pointer>0){*CIP_Pointer +=191; fwrite(CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
+    write_EVA_BLK_INDEX(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
 }
 
 void write_EVA_BLK_INDEX(FILE *fichier, pixel_structure *penultimatePointer, 
