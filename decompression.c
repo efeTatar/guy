@@ -18,15 +18,11 @@ void decompressionManager(FILE *fichier){
 
     int debugCount = 0, *c; c=&debugCount;
 
-    // i->y & j->x 
     int i = 0, j = 0; int *x, *y; x=&i; y=&j;
-    for(j=0;j<h;j++){
-        for(i=0;i<w;i++){
-            //printf("w = %d | h = %d\n", w, h);
-            type_determiner(fichier, img, &i, &j, &penultimate, c, &ultimate, cache, w, h);
-        }
+    while(*c< ((w-1)*(h-1)) ){
+        type_determiner(fichier, img, &i, &j, &penultimate, c, &ultimate, cache, w, h);
+        //printf("%d", *c);
     }
-
     free(cache);
 }
 

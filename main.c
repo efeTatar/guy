@@ -2,7 +2,7 @@
 
 int main(){
     PPM_IMG* img = NULL;
-    img = ppmOpen("testdsogv");
+    img = ppmOpen("pinkfloyd.ppm");
     FILE *fichier = NULL;
 	fichier = fopen("blabla", "wb+");
     compressionManager(fichier, img);

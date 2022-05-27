@@ -18,6 +18,7 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
             penultimate = ultimate;
             //printf("(%d %d) ", x, y);
             if(CIP==62){
+                CIP+=191;
                 fwrite(&CIP, sizeof(int), 1, fichier);
                 CIP = 0;
             }
