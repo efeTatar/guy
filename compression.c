@@ -15,9 +15,11 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
         for(x=0;x<ppmGetWidth(img);x++){
             DecimalToHex(Hex, ppmRead(img, x, y));
             HexToRGB(Hex, &ultimate);
-            printf("(%d, %d, %d) ", ultimate.r, ultimate.g, ultimate.b);
+            printf("(%d, %d, %d)", ultimate.r, ultimate.g, ultimate.b);
             write_EVA_BLK_SAME(fichier, &penultimate, &ultimate, &CIP, cache);
             penultimate = ultimate;
+            index = (3*ultimate.r + 5*ultimate.g + 7*ultimate.b)%64;
+            cache[index] = ultimate;
             //printf("(%d %d) ", x, y);
             if(CIP==62){
                 CIP+=191;
@@ -53,6 +55,7 @@ void write_EVA_BLK_INDEX(FILE *fichier, pixel_structure *penultimatePointer,
     if(ComparePixels((cache+index), ultimatePointer)==1){
         printf("index ");
         fwrite(&index, sizeof(int), 1, fichier);  
+        //printf("%u ", index);
         return;
     }
     else{
@@ -74,13 +77,14 @@ void write_EVA_BLK_DIFF(FILE *fichier, pixel_structure *penultimatePointer,
         rdiff += 2;
         gdiff += 2;
         bdiff += 2;
-        unsigned int byte;
+        unsigned int byte = 0;
         byte = 1; byte = byte << 2;
         byte = byte | rdiff;
         byte = byte << 2;
         byte = byte | gdiff;
         byte = byte << 2;
         byte = byte | bdiff;
+        //printf("%u ", byte);
         fwrite(&byte, sizeof(int), 1, fichier); 
         return;
     }
@@ -104,7 +108,7 @@ void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
         byte = byte << 6;
         gdiff += 32;
         byte = byte | gdiff;
-        printf("%u ", byte);
+        //printf("%u ", byte);
         fwrite(&byte, sizeof(int), 1, fichier);
         byte = 0;
         rgdiff += 8;
@@ -112,7 +116,7 @@ void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
         byte = byte | rgdiff;
         byte = byte << 4;
         byte = byte | bgdiff;
-        printf("%u ", byte);
+        //printf("%u ", byte);
         fwrite(&byte, sizeof(int), 1, fichier);
         return;
     }
