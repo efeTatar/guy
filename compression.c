@@ -19,6 +19,7 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
             //printf("(%d %d) ", x, y);
             if(CIP==62){
                 fwrite(&CIP, sizeof(int), 1, fichier);
+                CIP = 0;
             }
         }
     }
@@ -85,7 +86,7 @@ void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
     if(bdiff>7 || bdiff<-8){check=0;}
     unsigned int byte;
     byte = 3; byte = byte << 6;
-    gdiff+=32; byte = byte | gdiff;
+    gdiff+=32; byte = byte | gdiff; 
     fwrite(&byte, sizeof(int), 1, fichier);
     if(check==1){fwrite(&byte, sizeof(int), 1, fichier);}
     rdiff = bdiff - gdiff - 32 + 8;
