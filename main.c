@@ -2,14 +2,14 @@
 
 int main(){
     PPM_IMG* img = NULL;
-    img = ppmOpen("pinkfloyd.ppm");
+    img = ppmOpen("testdsogv");
     FILE *fichier = NULL;
 	fichier = fopen("blabla", "wb+");
     compressionManager(fichier, img);
     fclose(fichier);
-    printf("compiled");
+    printf("compiled\n");
     ppmClose(img);
-    
+    printf("\n");
     fichier = fopen("blabla", "rb");
     rewind(fichier);
     decompressionManager(fichier);
