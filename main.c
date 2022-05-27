@@ -2,7 +2,7 @@
 
 int main(){
     PPM_IMG* img = NULL;
-    img = ppmOpen("nintendo.ppm");
+    img = ppmOpen("testdsogv");
     FILE *fichier = NULL;
 	fichier = fopen("blabla", "wb+");
     compressionManager(fichier, img);

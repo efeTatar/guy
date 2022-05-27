@@ -21,5 +21,3 @@ exe : ppm_lib.o compression.o decompression.o conversion.o main.o
 clean:
 	rm -f *.o
 	rm exe
-
-

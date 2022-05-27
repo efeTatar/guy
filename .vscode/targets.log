@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon May 23 18:46:50 2022
+# Make data base, printed on Fri May 27 16:56:43 2022
 
 # Variables
 
@@ -53,7 +53,7 @@ SNAP_DATA = /var/snap/code/97
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:49742
+JOURNAL_STREAM = 8:48003
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # environment
@@ -79,7 +79,7 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 _ = /snap/code/97/usr/share/code/code
 # environment
-MANAGERPID = 2007
+MANAGERPID = 2078
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
@@ -95,7 +95,7 @@ PATH = /opt/gradle/bin:/opt/gradle/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/student-laptop:@/tmp/.ICE-unix/2221,unix/student-laptop:/tmp/.ICE-unix/2221
+SESSION_MANAGER = local/student-laptop:@/tmp/.ICE-unix/2295,unix/student-laptop:/tmp/.ICE-unix/2295
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -113,7 +113,7 @@ DISABLE_WAYLAND = 1
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 747bbf6ceba64fbb9186e215aa31b8db
+INVOCATION_ID = 173790df2efd4c3da5f795ec6f520848
 # environment
 GDK_PIXBUF_MODULEDIR = /snap/code/97/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # default
@@ -125,7 +125,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 4484
+GIO_LAUNCHED_DESKTOP_FILE_PID = 4048
 # automatic
 %F = $(notdir $%)
 # environment
@@ -139,7 +139,7 @@ PWD = /home/cytech/ProjetS2/guy
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 2183
+SSH_AGENT_PID = 2255
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -191,7 +191,7 @@ SHLVL = 0
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-40425134-c71d-4c3d-946f-fcc328eb092f.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-5b4021e6-b11a-4e8c-8233-49baebc86ca5.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -277,9 +277,8 @@ _VIRTUALENVWRAPPER_API =  mkvirtualenv rmvirtualenv lsvirtualenv showvirtualenv 
 # environment
 LANG = C
 # environment
-VSCODE_PID = 4529
+VSCODE_PID = 4091
 # variable set hash-table stats:
- 
 # Load=133/1024=13%, Rehash=0, Collisions=24/158=15%
 
 # Pattern-specific Variable Values
@@ -288,13 +287,14 @@ VSCODE_PID = 4529
 
 # Directories
 
-# . (device 66309, inode 7083172): 27 files, no impossibilities.
+# . (device 66309, inode 7083172): 28 files, no impossibilities.
 
-# 27 files, no impossibilities in 1 directories.
+# 28 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
 # No implicit rules.
+ 
 
 # Files
 
@@ -339,7 +339,7 @@ EXO: exe
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-23 14:13:13.202291391
+#  Last modified 2022-05-27 16:56:43.173275147
 #  File has been updated.
 #  Successfully updated.
 
@@ -417,12 +417,12 @@ ppm_lib.c:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 40 / storage = 395 B / avg = 9 B
-# current buf: size = 8162 B / used = 395 B / count = 40 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 41 / storage = 406 B / avg = 9 B
+# current buf: size = 8162 B / used = 406 B / count = 41 / avg = 9 B
 
-# strcache performance: lookups = 68 / hit rate = 41%
+# strcache performance: lookups = 69 / hit rate = 40%
 # hash-table stats:
-# Load=40/8192=0%, Rehash=0, Collisions=2/68=3%
-# Finished Make data base on Mon May 23 18:46:50 2022
+# Load=41/8192=1%, Rehash=0, Collisions=2/69=3%
+# Finished Make data base on Fri May 27 16:56:43 2022
 
  
