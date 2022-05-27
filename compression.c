@@ -1,58 +1,43 @@
 #include "ppm_lib.h"
 
 void compressionManager(FILE *fichier, PPM_IMG* img){
-    pixel_structure penultimate, ultimate
-                    ,*penultimatePointer, *ultimatePointer;
+    pixel_structure penultimate, ultimate;
     penultimate.r = 0;
     penultimate.g = 0;
     penultimate.b = 0;
-    penultimatePointer = &penultimate;
-    ultimatePointer = &ultimate;
-    int dec;
     pixel_structure cache[64]; int index;
     char Hex[6] = " ";
-
-    int CIP = 0, *CIP_Pointer = NULL;
-    CIP_Pointer = &CIP;
-    int i, j; int k;
-    int w = ppmGetWidth(img);
-    int h = ppmGetHeight(img);
+    int CIP = 0;
+    int x, y;
     writeHeader(fichier, img);
-    for(j=0;j<h;j++){   
-        for(i=0;i<w;i++){
-            dec = ppmRead(img, i, j);
-            DecimalToHex(Hex, dec);
-            //for(k=0;k<6;k++){printf("%c", Hex[k]);}
-            HexToRGB(Hex, ultimatePointer);
-            //printf("(%d %d %d)", (*penultimatePointer).r, (*penultimatePointer).g, (*penultimatePointer).b);
-            //printf("(%d %d %d)", (*ultimatePointer).r, (*ultimatePointer).g, (*ultimatePointer).b);
-            write_EVA_BLK_SAME(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
-            index = (3*(*ultimatePointer).r + 5*(*ultimatePointer).g + 7*(*ultimatePointer).b)%64;
-            cache[index] = ultimate;
+    for(y=0;y<ppmGetHeight(img);y++){
+        for(x=0;x<ppmGetWidth(img);x++){
+            DecimalToHex(Hex, ppmRead(img, x, y));
+            HexToRGB(Hex, &ultimate);
+            write_EVA_BLK_SAME(fichier, &penultimate, &ultimate, &CIP, cache);
             penultimate = ultimate;
-            printf("(%d,%d) ", i, j);
-        } 
+            //printf("(%d %d) ", x, y);
+            if(CIP==62){
+                fwrite(&CIP, sizeof(int), 1, fichier);
+            }
+        }
     }
+
 }
 
 void write_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]){
-    int same;
-    same = ComparePixels(penultimatePointer, ultimatePointer);
-
-    if(same == 1){
-        //printf("same");
+    if(ComparePixels(penultimatePointer, ultimatePointer)==1){
         *CIP_Pointer++;
-        if((*CIP_Pointer)==62){
-            (*CIP_Pointer) += 191;
-            fwrite(CIP_Pointer, sizeof(int), 1, fichier); 
-            (*CIP_Pointer) = 0;
-        }
-        return;
-        return;
     }
-    if(*CIP_Pointer>0){*CIP_Pointer +=191; fwrite(CIP_Pointer, sizeof(int), 1, fichier); *CIP_Pointer = 0;}
-    write_EVA_BLK_INDEX(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
+    else{
+        if(*CIP_Pointer>0){
+            *CIP_Pointer += 191;
+            fwrite(CIP_Pointer, sizeof(int), 1, fichier);
+            *CIP_Pointer = 0;
+        }
+        write_EVA_BLK_INDEX(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
+    }
 }
 
 void write_EVA_BLK_INDEX(FILE *fichier, pixel_structure *penultimatePointer, 
@@ -130,7 +115,6 @@ void writeHeader(FILE *fichier, PPM_IMG *img){
         h = ppmGetHeight(img),
         rng = ppmGetRange (img),
         nbColors = ppmGetColors(img);
-    printf("\n%d", rng);
     fwrite(&w, sizeof(int), 1, fichier);
     fwrite(&h, sizeof(int), 1, fichier);
     fwrite(&rng, sizeof(int), 1, fichier);
