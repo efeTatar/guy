@@ -105,37 +105,35 @@ void detected_EVA_BK_DEBUG(){
 
 void type_determiner(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structure *penultimatePointeur, int *c,
                     pixel_structure *ultimatePointeur, pixel_structure cache[64], int w, int h){
-    unsigned int byte, check_byte;
-    fread(&byte, sizeof(int), 1, fichier);
-    check_byte = byte >> 6;
-    switch(check_byte){
-        case 0x3:
-            if( (byte & 0xFE) == 0xFE ){
+    unsigned int byte;
+    fread(&byte, sizeof(int), 1, fichier);  
+    switch(byte & 0xC0){
+        case 0xC0:
+            if(byte == 0xFE){
                 detected_EVA_BK_RGB(fichier, img, i, j, ultimatePointeur, cache);
                 (*c)--;
                 if((*i)=w){(*i)=0;(*j)++;}
                 break;
             }                          
-            if( (byte & 0xFF) == 0xFF ){
+            if(byte  == 0xFF ){
                 detected_EVA_BK_DEBUG();
                 break;
             }
+            else{
             detected_EVA_BK_SAME(byte, img, ultimatePointeur, penultimatePointeur, i, j, w, c);
+            }
             break;
-
-        case 0x0:
+        case 0x00:
             detected_EVA_BK_INDEX(byte, img, ultimatePointeur, cache, i, j);
             (*c)--;
             if((*i)=w){(*i)=0;(*j)++;}
             break;
-
-        case 0x1:
+        case 0x40:
             detected_EVA_BK_DIFF(byte, img, ultimatePointeur, penultimatePointeur, i, j, cache);
             (*c)--;
             if((*i)=w){(*i)=0;(*j)++;}
             break;
-
-        case 0x2:
+        case 0x80:
             detected_EVA_BK_LUMA(fichier, byte, img, ultimatePointeur, penultimatePointeur, i, j, cache);
             (*c)--;
             if((*i)=w){(*i)=0;(*j)++;}
