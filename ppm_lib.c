@@ -173,7 +173,7 @@ void ppmWrite(PPM_IMG* img, int x, int y, int value){
     }    
     // check if the x and y are in the scope of the picture
     if(x<0 || x >= img->W || y<0 || y >= img->H){
-        printf("[ERROR] in getPixel : position does not fit requirements (x=%d / y=%d / w=%d / h=%d) !\n", x, y, img->W, img->H);
+        printf("[ERROR] in getPixelS : position does not fit requirements (x=%d / y=%d / w=%d / h=%d) !\n", x, y, img->W, img->H);
         exit(-1);
     }
     // Check the value is in the range

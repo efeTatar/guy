@@ -2,7 +2,11 @@
 
 int main(){
     PPM_IMG* img = NULL;
+<<<<<<< HEAD
     img = ppmOpen("calvinhobbes.ppm");
+=======
+    img = ppmOpen("nintendo.ppm");
+>>>>>>> main
     FILE *fichier = NULL;
 	fichier = fopen("blabla", "wb+");
     compressionManager(fichier, img);

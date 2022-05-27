@@ -7,13 +7,9 @@ void decompressionManager(FILE *fichier){
     fread(&h, sizeof(int), 1, fichier);
     fread(&rng, sizeof(int), 1, fichier);
     fread(&nbColours, sizeof(int), 1, fichier);
-    printf("\n%d\n", rng);
     img = ppmNew(w, h, rng, nbColours);
 
     pixel_structure penultimate, ultimate;
-    pixel_structure *penultimatePointeur, *ultimatePointeur;
-    penultimatePointeur = &penultimate;
-    ultimatePointeur = &ultimate;
     pixel_structure *cache; int index;
     cache = malloc(64 * sizeof(pixel_structure));
     penultimate.r = 0;
@@ -24,18 +20,26 @@ void decompressionManager(FILE *fichier){
 
     // i->y & j->x 
     int i = 0, j = 0; int *x, *y; x=&i; y=&j;
+<<<<<<< HEAD
     while(debugCount<10 && j<800){ 
         type_determiner(fichier, img, x, y, penultimatePointeur, c, ultimatePointeur, cache, w, h);
+=======
+    for(j=0;j<h;j++){
+        for(i=0;i<w;i++){
+            ppmWrite(img, i, j, 16711730);
+        }
+>>>>>>> main
     }
 
     free(cache);
 }
 
-void detected_EVA_BK_SAME(unsigned int byte, PPM_IMG *img, pixel_structure *ultimate, pixel_structure *penultimate, int *i, int *j, int w){
+void detected_EVA_BK_SAME(unsigned int byte, PPM_IMG *img, pixel_structure *ultimate, pixel_structure *penultimate, int *i, int *j, int w, int *c){
     int repeat; 
     repeat = byte - 64;
     while(repeat!=0){
         ppmWrite(img, (*i), (*j), pixel((*penultimate).r, (*penultimate).g, (*penultimate).r));
+        (*c)++;
         (*i)++;
         if((*i)=w){(*i)=1;(*j)++;}       
         repeat--;
@@ -97,11 +101,11 @@ void detected_EVA_BK_RGB(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_stru
     (*i)++;
 }
 
-void detected_EVA_BK_DEBUG(int *debugCount){
-    (*debugCount)++;
+void detected_EVA_BK_DEBUG(){
+    printf("hello");
 }
 
-void type_determiner(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structure *penultimatePointeur, int *debugCount,
+void type_determiner(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structure *penultimatePointeur, int *c,
                     pixel_structure *ultimatePointeur, pixel_structure cache[64], int w, int h){
     unsigned int byte, check_byte;
     fread(&byte, sizeof(int), 1, fichier);
@@ -110,28 +114,32 @@ void type_determiner(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structur
         case 0x3:
             if( (byte & 0xFE) == 0xFE ){
                 detected_EVA_BK_RGB(fichier, img, i, j, ultimatePointeur, cache);
+                (*c)++;
                 if((*i)=w){(*i)=1;(*j)++;}
                 break;
             }
             if( (byte & 0xFF) == 0xFF ){
-                detected_EVA_BK_DEBUG(debugCount);
+                detected_EVA_BK_DEBUG();
                 break;
             }
-            detected_EVA_BK_SAME(byte, img, ultimatePointeur, penultimatePointeur, i, j, w);
+            detected_EVA_BK_SAME(byte, img, ultimatePointeur, penultimatePointeur, i, j, w, c);
             break;
 
         case 0x0:
             detected_EVA_BK_INDEX(byte, img, ultimatePointeur, cache, i, j);
+            (*c)++;
             if((*i)=w){(*i)=1;(*j)++;}
             break;
 
         case 0x1:
             detected_EVA_BK_DIFF(byte, img, ultimatePointeur, penultimatePointeur, i, j, cache);
+            (*c)++;
             if((*i)=w){(*i)=1;(*j)++;}
             break;
 
         case 0x2:
             detected_EVA_BK_LUMA(fichier, byte, img, ultimatePointeur, penultimatePointeur, i, j, cache);
+            (*c)++;
             if((*i)=w){(*i)=1;(*j)++;}
             break;
     }
