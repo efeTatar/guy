@@ -20,15 +20,10 @@ void decompressionManager(FILE *fichier){
 
     // i->y & j->x 
     int i = 0, j = 0; int *x, *y; x=&i; y=&j;
-<<<<<<< HEAD
-    while(debugCount<10 && j<800){ 
-        type_determiner(fichier, img, x, y, penultimatePointeur, c, ultimatePointeur, cache, w, h);
-=======
     for(j=0;j<h;j++){
         for(i=0;i<w;i++){
             ppmWrite(img, i, j, 16711730);
         }
->>>>>>> main
     }
 
     free(cache);
