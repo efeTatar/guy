@@ -100,10 +100,11 @@ void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
     if(check==1){
         printf("luma ");
         unsigned int byte;
-        byte = 3;
+        byte = 2;
         byte = byte << 6;
         gdiff += 32;
         byte = byte | gdiff;
+        printf("%u ", byte);
         fwrite(&byte, sizeof(int), 1, fichier);
         byte = 0;
         rgdiff += 8;
@@ -111,6 +112,7 @@ void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
         byte = byte | rgdiff;
         byte = byte << 4;
         byte = byte | bgdiff;
+        printf("%u ", byte);
         fwrite(&byte, sizeof(int), 1, fichier);
         return;
     }

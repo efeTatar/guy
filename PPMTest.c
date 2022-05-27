@@ -9,9 +9,9 @@ int main(){
         for(x=0;x<w;x++){
             chance = rand()%5;
             if(chance >= 4){
-                r = rand()%256;
-                g = rand()%256;
-                b = rand()%256;
+                r = rand()%10;
+                g = rand()%10;
+                b = rand()%10;
             }
             ppmWrite(img, x, y, pixel(r, g, b));
         }
