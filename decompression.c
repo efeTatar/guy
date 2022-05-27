@@ -22,7 +22,8 @@ void decompressionManager(FILE *fichier){
     int i = 0, j = 0; int *x, *y; x=&i; y=&j;
     for(j=0;j<h;j++){
         for(i=0;i<w;i++){
-            ppmWrite(img, i, j, 16711730);
+            //printf("w = %d | h = %d\n", w, h);
+            type_determiner(fichier, img, &i, &j, &penultimate, c, &ultimate, cache, w, h);
         }
     }
 
@@ -31,12 +32,12 @@ void decompressionManager(FILE *fichier){
 
 void detected_EVA_BK_SAME(unsigned int byte, PPM_IMG *img, pixel_structure *ultimate, pixel_structure *penultimate, int *i, int *j, int w, int *c){
     int repeat; 
-    repeat = byte - 64;
+    repeat = byte - 191;
     while(repeat!=0){
         ppmWrite(img, (*i), (*j), pixel((*penultimate).r, (*penultimate).g, (*penultimate).r));
         (*c)++;
         (*i)++;
-        if((*i)=w){(*i)=1;(*j)++;}       
+        if((*i)=w){(*i)=0;(*j)++;}       
         repeat--;
     }
 }
@@ -110,9 +111,9 @@ void type_determiner(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structur
             if( (byte & 0xFE) == 0xFE ){
                 detected_EVA_BK_RGB(fichier, img, i, j, ultimatePointeur, cache);
                 (*c)++;
-                if((*i)=w){(*i)=1;(*j)++;}
+                if((*i)=w){(*i)=0;(*j)++;}
                 break;
-            }
+            }                          
             if( (byte & 0xFF) == 0xFF ){
                 detected_EVA_BK_DEBUG();
                 break;
@@ -123,19 +124,19 @@ void type_determiner(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structur
         case 0x0:
             detected_EVA_BK_INDEX(byte, img, ultimatePointeur, cache, i, j);
             (*c)++;
-            if((*i)=w){(*i)=1;(*j)++;}
+            if((*i)=w){(*i)=0;(*j)++;}
             break;
 
         case 0x1:
             detected_EVA_BK_DIFF(byte, img, ultimatePointeur, penultimatePointeur, i, j, cache);
             (*c)++;
-            if((*i)=w){(*i)=1;(*j)++;}
+            if((*i)=w){(*i)=0;(*j)++;}
             break;
 
         case 0x2:
             detected_EVA_BK_LUMA(fichier, byte, img, ultimatePointeur, penultimatePointeur, i, j, cache);
             (*c)++;
-            if((*i)=w){(*i)=1;(*j)++;}
+            if((*i)=w){(*i)=0;(*j)++;}
             break;
     }
 }
