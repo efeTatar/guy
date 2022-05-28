@@ -15,33 +15,41 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
         for(x=0;x<ppmGetWidth(img);x++){
             DecimalToHex(Hex, ppmRead(img, x, y));
             HexToRGB(Hex, &ultimate);
-            printf("(%d, %d, %d)", ultimate.r, ultimate.g, ultimate.b);
+            //printf("(%d, %d, %d)", ultimate.r, ultimate.g, ultimate.b);
+            printf(" (%d %d) ", x, y);
             write_EVA_BLK_SAME(fichier, &penultimate, &ultimate, &CIP, cache);
             penultimate = ultimate;
             index = (3*ultimate.r + 5*ultimate.g + 7*ultimate.b)%64;
             cache[index] = ultimate;
-            //printf("(%d %d) ", x, y);
             if(CIP==62){
                 CIP+=191;
                 fwrite(&CIP, sizeof(int), 1, fichier);
+                printf("same");
                 CIP = 0;
             }
         }
     }
-
+    if(CIP>0){
+        CIP+=191;
+        fwrite(&CIP, sizeof(int), 1, fichier);
+        CIP = 0;
+        printf("same ");
+    }
+    write_EVA_BLK_DEBUG(fichier, &penultimate, &ultimate, &CIP, cache);
 }
 
 void write_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]){
     if(ComparePixels(penultimatePointer, ultimatePointer)==1){
-        printf("same ");
-        *CIP_Pointer++;
+        //printf("same ");
+        (*CIP_Pointer)++;
         return;
     }
     else{
         if(*CIP_Pointer>0){
             *CIP_Pointer += 191;
             fwrite(CIP_Pointer, sizeof(int), 1, fichier);
+            printf("same");
             *CIP_Pointer = 0;
         }
         write_EVA_BLK_INDEX(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
@@ -53,9 +61,10 @@ void write_EVA_BLK_INDEX(FILE *fichier, pixel_structure *penultimatePointer,
     int index;
     index = (3*(*ultimatePointer).r + 5*(*ultimatePointer).g + 7*(*ultimatePointer).b)%64;
     if(ComparePixels((cache+index), ultimatePointer)==1){
-        printf("index ");
-        fwrite(&index, sizeof(int), 1, fichier);  
-        //printf("%u ", index);
+        //printf("index ");
+        fwrite(&index, sizeof(int), 1, fichier);
+        printf("index");
+        printf("%u ", index);
         return;
     }
     else{
@@ -73,7 +82,7 @@ void write_EVA_BLK_DIFF(FILE *fichier, pixel_structure *penultimatePointer,
     if(gdiff>1 || gdiff<-2){check=0;}
     if(bdiff>1 || bdiff<-2){check=0;}
     if(check==1){
-        printf("diff ");
+        //printf("diff ");
         rdiff += 2;
         gdiff += 2;
         bdiff += 2;
@@ -86,6 +95,7 @@ void write_EVA_BLK_DIFF(FILE *fichier, pixel_structure *penultimatePointer,
         byte = byte | bdiff;
         //printf("%u ", byte);
         fwrite(&byte, sizeof(int), 1, fichier); 
+        printf("diff");
         return;
     }
     write_EVA_BLK_LUMA(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
@@ -102,14 +112,15 @@ void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
     if(rgdiff>7 || rgdiff<-8){check=0;}
     if(bgdiff>7 || bgdiff<-8){check=0;}
     if(check==1){
-        printf("luma ");
-        unsigned int byte;
+        //printf("luma ");
+        unsigned int byte = 0;
         byte = 2;
         byte = byte << 6;
         gdiff += 32;
         byte = byte | gdiff;
         //printf("%u ", byte);
         fwrite(&byte, sizeof(int), 1, fichier);
+        printf("luma1");
         byte = 0;
         rgdiff += 8;
         bgdiff += 8;
@@ -118,6 +129,7 @@ void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
         byte = byte | bgdiff;
         //printf("%u ", byte);
         fwrite(&byte, sizeof(int), 1, fichier);
+        printf("luma2");
         return;
     }
     write_EVA_BLK_RGB(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
@@ -125,16 +137,21 @@ void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
 
 void write_EVA_BLK_RGB(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]){
-    printf("rgb ");
-    fwrite("0xFE", sizeof(int), 1, fichier);
-    fwrite(&ultimatePointer->r, sizeof(int), 1, fichier);
-    fwrite(&ultimatePointer->g, sizeof(int), 1, fichier);
-    fwrite(&ultimatePointer->b, sizeof(int), 1, fichier);
+    //printf("rgb ");
+    unsigned int byte = 0xFE;
+    fwrite(&byte, sizeof(int), 1, fichier);
+    printf("RGB1");
+    fwrite(&(ultimatePointer->r), sizeof(int), 1, fichier);printf("RGB2");
+    fwrite(&(ultimatePointer->g), sizeof(int), 1, fichier);printf("RGB3");
+    fwrite(&(ultimatePointer->b), sizeof(int), 1, fichier);printf("RGB4");
 }
 
 void write_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]){
-    fwrite("0xFF", sizeof(int), 1, fichier);
+    unsigned int byte;
+    byte = 0xFF;
+    fwrite(&byte, sizeof(int), 1, fichier);
+    printf("DEBUG");
 }
 
 void writeHeader(FILE *fichier, PPM_IMG *img){

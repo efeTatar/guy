@@ -7,6 +7,17 @@ int main(){
 	fichier = fopen("blabla", "wb+");
     compressionManager(fichier, img);
     fclose(fichier);
+
+    unsigned int b = 0;
+    FILE *helo = NULL;
+	helo = fopen("blabla", "rb");
+    int i;
+    for(i=0;i<100;i++){
+        fread(&b, sizeof(int), 1, helo);
+        printf("\n%u", b);
+    }
+    fclose(helo);
+
     printf("compiled\n");
     ppmClose(img);
     printf("\n");
