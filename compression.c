@@ -23,7 +23,7 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
             cache[index] = ultimate;
             if(CIP==62){
                 CIP+=191;
-                fwrite(&CIP, sizeof(int), 1, fichier);
+                fwrite(&CIP, sizeof(unsigned char), 1, fichier);
                 printf("same");
                 CIP = 0;
             }
@@ -31,7 +31,7 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
     }
     if(CIP>0){
         CIP+=191;
-        fwrite(&CIP, sizeof(int), 1, fichier);
+        fwrite(&CIP, sizeof(unsigned char), 1, fichier);
         CIP = 0;
         printf("same ");
     }
@@ -48,7 +48,7 @@ void write_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimatePointer,
     else{
         if(*CIP_Pointer>0){
             *CIP_Pointer += 191;
-            fwrite(CIP_Pointer, sizeof(int), 1, fichier);
+            fwrite(CIP_Pointer, sizeof(unsigned char), 1, fichier);
             printf("same");
             *CIP_Pointer = 0;
         }
@@ -62,7 +62,7 @@ void write_EVA_BLK_INDEX(FILE *fichier, pixel_structure *penultimatePointer,
     index = (3*(*ultimatePointer).r + 5*(*ultimatePointer).g + 7*(*ultimatePointer).b)%64;
     if(ComparePixels((cache+index), ultimatePointer)==1){
         //printf("index ");
-        fwrite(&index, sizeof(int), 1, fichier);
+        fwrite(&index, sizeof(unsigned char), 1, fichier);
         printf("index");
         printf("%u ", index);
         return;
@@ -94,7 +94,7 @@ void write_EVA_BLK_DIFF(FILE *fichier, pixel_structure *penultimatePointer,
         byte = byte << 2;
         byte = byte | bdiff;
         //printf("%u ", byte);
-        fwrite(&byte, sizeof(int), 1, fichier); 
+        fwrite(&byte, sizeof(unsigned char), 1, fichier); 
         printf("diff");
         return;
     }
@@ -119,7 +119,7 @@ void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
         gdiff += 32;
         byte = byte | gdiff;
         //printf("%u ", byte);
-        fwrite(&byte, sizeof(int), 1, fichier);
+        fwrite(&byte, sizeof(unsigned char), 1, fichier);
         printf("luma1");
         byte = 0;
         rgdiff += 8;
@@ -128,7 +128,7 @@ void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
         byte = byte << 4;
         byte = byte | bgdiff;
         //printf("%u ", byte);
-        fwrite(&byte, sizeof(int), 1, fichier);
+        fwrite(&byte, sizeof(unsigned char), 1, fichier);
         printf("luma2");
         return;
     }
@@ -139,18 +139,18 @@ void write_EVA_BLK_RGB(FILE *fichier, pixel_structure *penultimatePointer,
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]){
     //printf("rgb ");
     unsigned int byte = 0xFE;
-    fwrite(&byte, sizeof(int), 1, fichier);
+    fwrite(&byte, sizeof(unsigned char), 1, fichier);
     printf("RGB1");
-    fwrite(&(ultimatePointer->r), sizeof(int), 1, fichier);printf("RGB2");
-    fwrite(&(ultimatePointer->g), sizeof(int), 1, fichier);printf("RGB3");
-    fwrite(&(ultimatePointer->b), sizeof(int), 1, fichier);printf("RGB4");
+    fwrite(&(ultimatePointer->r), sizeof(unsigned char), 1, fichier);printf("RGB2");
+    fwrite(&(ultimatePointer->g), sizeof(unsigned char), 1, fichier);printf("RGB3");
+    fwrite(&(ultimatePointer->b), sizeof(unsigned char), 1, fichier);printf("RGB4");
 }
 
 void write_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]){
     unsigned int byte;
     byte = 0xFF;
-    fwrite(&byte, sizeof(int), 1, fichier);
+    fwrite(&byte, sizeof(unsigned char), 1, fichier);
     printf("DEBUG");
 }
 
@@ -159,9 +159,9 @@ void writeHeader(FILE *fichier, PPM_IMG *img){
         h = ppmGetHeight(img),
         rng = ppmGetRange (img),
         nbColors = ppmGetColors(img);
-    fwrite(&w, sizeof(int), 1, fichier);
-    fwrite(&h, sizeof(int), 1, fichier);
-    fwrite(&rng, sizeof(int), 1, fichier);
-    fwrite(&nbColors, sizeof(int), 1, fichier);
+    fwrite(&w, sizeof(unsigned char), 1, fichier);
+    fwrite(&h, sizeof(unsigned char), 1, fichier);
+    fwrite(&rng, sizeof(unsigned char), 1, fichier);
+    fwrite(&nbColors, sizeof(unsigned char), 1, fichier);
 }
 
