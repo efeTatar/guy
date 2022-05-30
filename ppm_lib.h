@@ -178,17 +178,17 @@
     void DecimalToHex(char tab[6], int dec);
     int ComparePixels(pixel_structure *penultimate, pixel_structure *ultimate);
     void compressionManager(FILE *fichier, PPM_IMG* img);
-    void write_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimatePointer, 
+    void check_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]);
-    void write_EVA_BLK_INDEX(FILE *fichier, pixel_structure *penultimatePointer, 
+    void check_EVA_BLK_INDEX(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]);
-    void write_EVA_BLK_DIFF(FILE *fichier, pixel_structure *penultimatePointer, 
+    void check_EVA_BLK_DIFF(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]);
-    void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer, 
+    void check_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]);
-    void write_EVA_BLK_RGB(FILE *fichier, pixel_structure *penultimatePointer, 
+    void check_EVA_BLK_RGB(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]);
-    void write_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimatePointer, 
+    void check_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]);
     void writeHeader(FILE *fichier, PPM_IMG *img);
     void decompressionManager(FILE *fichier);

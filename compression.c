@@ -1,79 +1,111 @@
 #include "ppm_lib.h"
 
+// Manages the compression process
 void compressionManager(FILE *fichier, PPM_IMG* img){
+
+    // Creates puniltimate and ultimate pixel structures;
     pixel_structure penultimate, ultimate;
+
+    // Sets initial penultimate pixel values to 0
     penultimate.r = 0;
     penultimate.g = 0;
     penultimate.b = 0;
+
     pixel_structure *cache; int index;
     cache = malloc(64 * sizeof(pixel_structure));
-    char Hex[6] = " ";
+
+    // Creates Hexadecimal string to convert decimal values to pixel structure
+    char Hex[6];
+
+    // Number of Consecutive Indentical Pixels
     int CIP = 0;
-    int x, y;
+
+    // Copies header into compression file
     writeHeader(fichier, img);
+
+    // Copies body into compression file
+    int x, y;
     for(y=0;y<ppmGetHeight(img);y++){
         for(x=0;x<ppmGetWidth(img);x++){
+
+            // Conversion of decimal value returned by provided functions
             DecimalToHex(Hex, ppmRead(img, x, y));
             HexToRGB(Hex, &ultimate);
-            //printf("(%d, %d, %d)", ultimate.r, ultimate.g, ultimate.b);
-            printf(" (%d %d) ", x, y);
-            write_EVA_BLK_SAME(fichier, &penultimate, &ultimate, &CIP, cache);
+
+            // Start of loop
+            check_EVA_BLK_SAME(fichier, &penultimate, &ultimate, &CIP, cache);
+
+            // Resets penultimate pixel values
             penultimate = ultimate;
+
+            // Puts ultimate pixel into cache
             index = (3*ultimate.r + 5*ultimate.g + 7*ultimate.b)%64;
             cache[index] = ultimate;
+
+            // Writes number of consecutive identical pixels and nullifies it
             if(CIP==62){
                 CIP+=191;
                 fwrite(&CIP, sizeof(unsigned char), 1, fichier);
-                printf("same");
                 CIP = 0;
             }
         }
     }
+    // Writes the number of consecutive identical pixels if it stays unwritten
     if(CIP>0){
         CIP+=191;
         fwrite(&CIP, sizeof(unsigned char), 1, fichier);
         CIP = 0;
-        printf("same ");
     }
-    write_EVA_BLK_DEBUG(fichier, &penultimate, &ultimate, &CIP, cache);
+
+    check_EVA_BLK_DEBUG(fichier, &penultimate, &ultimate, &CIP, cache);
 }
 
-void write_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimatePointer, 
+// Functions decide what pixel to write
+// Each one checks if they are supposed to write the block they have in their names 
+
+void check_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]){
+    
+    // Checks if the ultimate pixel is identical to the penultimate one
     if(ComparePixels(penultimatePointer, ultimatePointer)==1){
-        //printf("same ");
         (*CIP_Pointer)++;
         return;
     }
     else{
+        // Writes the number of consecutive identical pixels an nullifies it
         if(*CIP_Pointer>0){
             *CIP_Pointer += 191;
             fwrite(CIP_Pointer, sizeof(unsigned char), 1, fichier);
-            printf("same");
             *CIP_Pointer = 0;
         }
-        write_EVA_BLK_INDEX(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
+        // Continuity of loop
+        check_EVA_BLK_INDEX(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
     }
 }
 
-void write_EVA_BLK_INDEX(FILE *fichier, pixel_structure *penultimatePointer, 
+void check_EVA_BLK_INDEX(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]){
+    // Computes index for ultimate pixel
     int index;
     index = (3*(*ultimatePointer).r + 5*(*ultimatePointer).g + 7*(*ultimatePointer).b)%64;
+
+    // Checks if the ultimate pixel is identical to the one in the cache
+    // Writes the value of index if so
     if(ComparePixels((cache+index), ultimatePointer)==1){
-        //printf("index ");
         fwrite(&index, sizeof(unsigned char), 1, fichier);
-        printf("index");
-        printf("%u ", index);
         return;
     }
     else{
-        write_EVA_BLK_DIFF(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
+        // Continuity of loop
+        check_EVA_BLK_DIFF(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
     }
 }
 
-void write_EVA_BLK_DIFF(FILE *fichier, pixel_structure *penultimatePointer, 
+void check_EVA_BLK_DIFF(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]){
+    
+    // The purpose of this variable is to check if EVLA BLK SAME values are in range
+    // It is set to 0 if not
     int check = 1;
     int rdiff = (*ultimatePointer).r-(*penultimatePointer).r, 
         gdiff = (*ultimatePointer).g-(*penultimatePointer).g,
@@ -81,28 +113,37 @@ void write_EVA_BLK_DIFF(FILE *fichier, pixel_structure *penultimatePointer,
     if(rdiff>1 || rdiff<-2){check=0;}
     if(gdiff>1 || gdiff<-2){check=0;}
     if(bdiff>1 || bdiff<-2){check=0;}
+
+    //Writes EVA BLK DIFF values in a single byte
     if(check==1){
-        //printf("diff ");
+        
+        // The algorithm requires adding 2 before storing values
         rdiff += 2;
         gdiff += 2;
         bdiff += 2;
+
+        // Creates byte to stock EVA BLK DIFF values
         unsigned int byte = 0;
+
+        // EVA BLK DIFF block is in the format 01 XX XX XX
+        // Each bit is pushed by 2 bits to the left in order to achieve this
         byte = 1; byte = byte << 2;
         byte = byte | rdiff;
         byte = byte << 2;
         byte = byte | gdiff;
         byte = byte << 2;
         byte = byte | bdiff;
-        //printf("%u ", byte);
         fwrite(&byte, sizeof(unsigned char), 1, fichier); 
-        printf("diff");
         return;
     }
-    write_EVA_BLK_LUMA(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
+    // Continuity of loop
+    check_EVA_BLK_LUMA(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
 }
 
-void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer, 
+void check_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]){
+    
+    // Computes the difference between the penultimate pixel and the ultimate one
     int rdiff = (*ultimatePointer).r-(*penultimatePointer).r, 
         gdiff = (*ultimatePointer).g-(*penultimatePointer).g,
         bdiff = (*ultimatePointer).b-(*penultimatePointer).b;
@@ -112,48 +153,45 @@ void write_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
     if(rgdiff>7 || rgdiff<-8){check=0;}
     if(bgdiff>7 || bgdiff<-8){check=0;}
     if(check==1){
-        //printf("luma ");
         unsigned int byte = 0;
         byte = 2;
         byte = byte << 6;
         gdiff += 32;
         byte = byte | gdiff;
-        //printf("%u ", byte);
         fwrite(&byte, sizeof(unsigned char), 1, fichier);
-        printf("luma1");
         byte = 0;
         rgdiff += 8;
         bgdiff += 8;
         byte = byte | rgdiff;
         byte = byte << 4;
         byte = byte | bgdiff;
-        //printf("%u ", byte);
         fwrite(&byte, sizeof(unsigned char), 1, fichier);
-        printf("luma2");
         return;
     }
-    write_EVA_BLK_RGB(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
+    // Continuity of loop
+    check_EVA_BLK_RGB(fichier, penultimatePointer,ultimatePointer, CIP_Pointer, cache);
 }
 
-void write_EVA_BLK_RGB(FILE *fichier, pixel_structure *penultimatePointer, 
+void check_EVA_BLK_RGB(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]){
-    //printf("rgb ");
     unsigned int byte = 0xFE;
     fwrite(&byte, sizeof(unsigned char), 1, fichier);
-    printf("RGB1");
-    fwrite(&(ultimatePointer->r), sizeof(unsigned char), 1, fichier);printf("RGB2");
-    fwrite(&(ultimatePointer->g), sizeof(unsigned char), 1, fichier);printf("RGB3");
-    fwrite(&(ultimatePointer->b), sizeof(unsigned char), 1, fichier);printf("RGB4");
+    fwrite(&(ultimatePointer->r), sizeof(unsigned char), 1, fichier);
+    fwrite(&(ultimatePointer->g), sizeof(unsigned char), 1, fichier);
+    fwrite(&(ultimatePointer->b), sizeof(unsigned char), 1, fichier);
+    // End of loop
 }
 
-void write_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimatePointer, 
+void check_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]){
     unsigned int byte;
     byte = 0xFF;
     fwrite(&byte, sizeof(unsigned char), 1, fichier);
-    printf("DEBUG");
 }
 
+// Copies header into compression file
+// w: width
+// h: height 
 void writeHeader(FILE *fichier, PPM_IMG *img){
     int w = ppmGetWidth (img),
         h = ppmGetHeight(img),
