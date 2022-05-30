@@ -3,27 +3,21 @@
 void decompressionManager(FILE *fichier){
     PPM_IMG *img = NULL;
     int w, h, rng, nbColours;
-    fread(&w, sizeof(int), 1, fichier);
-    fread(&h, sizeof(int), 1, fichier);
-    fread(&rng, sizeof(int), 1, fichier);
-    fread(&nbColours, sizeof(int), 1, fichier);
+    unsigned char read;
+    fread(&read, sizeof(unsigned char), 1, fichier);
+    w = (int)read;
+    fread(&read, sizeof(unsigned char), 1, fichier);
+    h = (int)read;
+    fread(&read, sizeof(unsigned char), 1, fichier);
+    rng = (int)read;
+    fread(&read, sizeof(unsigned char), 1, fichier);
+    nbColours = (int)read;
     img = ppmNew(w, h, rng, nbColours);
 
     pixel_structure penultimate, ultimate;
     pixel_structure *cache; int index;
     cache = malloc(64 * sizeof(pixel_structure));
-    penultimate.r = 0;
-    penultimate.g = 0;
-    penultimate.b = 0;
-
-    int debugCount = 0, *c; c=&debugCount;
-
-    int i = 0, j = 0; int *x, *y; x=&i; y=&j;
-    *c = w*h;
-    while(*c>10){
-        type_determiner(fichier, img, &i, &j, &penultimate, c, &ultimate, cache, w, h);
-        //printf("%d", *c);
-    }
+    
     free(cache);
 }
 

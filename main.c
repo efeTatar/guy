@@ -2,7 +2,7 @@
 
 int main(){
     PPM_IMG* img = NULL;
-    char nom[100], *Init = NULL;
+    /*char nom[100], *Init = NULL;
     int i, taille;
     scanf("%s", nom);
     taille = strlen(nom);
@@ -12,17 +12,16 @@ int main(){
         Init[i+7] = nom[i];
     }
     printf("%s", Init);
-    printf("\n");
-    img = ppmOpen(Init);
+    printf("\n");*/
+    img = ppmOpen("testdsogv");
     FILE *fichier = NULL;
 	fichier = fopen("blabla", "wb+");
-    //compressionManager(fichier, img);
+    compressionManager(fichier, img);
     fclose(fichier);
-    FILE *helo = NULL;
     ppmClose(img);
     printf("\nCOMPILED\n");
 
-    
+    /*FILE *helo = NULL;
 	helo = fopen("blabla", "rb");
     unsigned char b = 0;
     int a;
@@ -30,16 +29,16 @@ int main(){
         fread(&b, sizeof(1), 1, helo);
         printf("\n%u", b);
     }
-    fclose(helo);
+    fclose(helo);*/
     
     printf("\n");
     fichier = fopen("blabla", "rb");
     rewind(fichier);
-    //decompressionManager(fichier);
+    decompressionManager(fichier);
     fclose(fichier);
     ppmSave(img, "fml2");
     printf("SAVED");
-    free(Init);
+    //free(Init);
     return 0;
 }
 
