@@ -138,6 +138,7 @@ void type_determiner(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structur
         case 0x80:
             detected_EVA_BK_LUMA(fichier, byte, img, ultimatePointeur, penultimatePointeur, i, j, cache);
             printf("\nLUMA");
+            if(*i>=w){*i=0; *j++;}
             freadChar(fichier, &byte);
             break;
     }
