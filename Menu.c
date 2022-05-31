@@ -1,11 +1,12 @@
-#include <stdio.h>
+#include "ppm_lib.h"
 
 int Menu(){
     int choix;
     printf("        || DE(COM)PRESSION ||\nQue voulez vous faire :\n   -COMPRESSION (tapez 1).\n   -DECOMPRESSION (tapez 2);");
     scanf("%d",&choix);
-    while(choix != & || choix != 0){
+    while(choix != 1 && choix != 0){
         printf("Reeur veuillez choisir un nombre entre 0 et 1");
+        scanf("%d",&choix);
     }
     switch(choix){
         case 1:

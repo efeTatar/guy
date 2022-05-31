@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue May 31 08:35:23 2022
+# Make data base, printed on Tue May 31 09:35:05 2022
 
 # Variables
 
@@ -287,9 +287,9 @@ VSCODE_PID = 4819
 
 # Directories
 
-# . (device 66309, inode 7083172): 22 files, no impossibilities.
+# . (device 66309, inode 7083172): 28 files, no impossibilities.
 
-# 22 files, no impossibilities in 1 directories.
+# 28 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -297,12 +297,12 @@ VSCODE_PID = 4819
 
 # Files
 
-exe: ppm_lib.o compression.o decompression.o conversion.o main.o
+exe: ppm_lib.o compression.o decompression.o conversion.o Menu.o main.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
-#  File has not been updated.
  
-#  recipe to execute (from 'makefile', line 19):
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 22):
 	gcc  $^ -o $@
 
 # Not a target:
@@ -324,6 +324,12 @@ main.c:
 #  Modification time never checked.
 #  File has not been updated.
 
+# Not a target:
+Menu.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 decompression.o: decompression.c ppm_lib.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -339,7 +345,7 @@ EXO: exe
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-27 16:56:43.173275147
+#  Last modified 2022-05-31 09:34:53.260548379
 #  File has been updated.
 #  Successfully updated.
 
@@ -380,7 +386,7 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 22):
+#  recipe to execute (from 'makefile', line 25):
 	rm -f *.o
 	rm exe
 
@@ -400,6 +406,13 @@ main.o: main.c ppm_lib.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+#  recipe to execute (from 'makefile', line 19):
+	gcc -c $< -o $@
+
+Menu.o: Menu.c ppm_lib.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 #  recipe to execute (from 'makefile', line 16):
 	gcc -c $< -o $@
 
@@ -410,19 +423,19 @@ ppm_lib.c:
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=18/1024=2%, Rehash=0, Collisions=0/45=0%
+# Load=20/1024=2%, Rehash=0, Collisions=1/50=2%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 35 / storage = 323 B / avg = 9 B
-# current buf: size = 8162 B / used = 323 B / count = 35 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 37 / storage = 330 B / avg = 8 B
+# current buf: size = 8162 B / used = 330 B / count = 37 / avg = 8 B
 
-# strcache performance: lookups = 63 / hit rate = 44%
+# strcache performance: lookups = 74 / hit rate = 50%
 # hash-table stats:
-# Load=35/8192=0%, Rehash=0, Collisions=1/63=2%
-# Finished Make data base on Tue May 31 08:35:23 2022
+# Load=37/8192=0%, Rehash=0, Collisions=1/74=1%
+# Finished Make data base on Tue May 31 09:35:05 2022
 
  

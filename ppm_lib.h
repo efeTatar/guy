@@ -205,6 +205,7 @@
     void type_determiner(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structure *penultimatePointeur, int *debugCount,
                     pixel_structure *ultimatePointeur, pixel_structure cache[64], unsigned int w, unsigned int h);
     void freadChar(FILE *fichier, unsigned int *value);
+    int Menu();
     
 #endif
 
