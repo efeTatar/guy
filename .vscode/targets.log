@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue May 31 09:35:05 2022
+# Make data base, printed on Wed Jun  1 10:21:44 2022
 
 # Variables
 
@@ -53,7 +53,7 @@ SNAP_DATA = /var/snap/code/97
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:51694
+JOURNAL_STREAM = 8:50658
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # environment
@@ -79,7 +79,7 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 _ = /snap/code/97/usr/share/code/code
 # environment
-MANAGERPID = 1987
+MANAGERPID = 2164
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
@@ -95,7 +95,7 @@ PATH = /opt/gradle/bin:/opt/gradle/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/student-laptop:@/tmp/.ICE-unix/2202,unix/student-laptop:/tmp/.ICE-unix/2202
+SESSION_MANAGER = local/student-laptop:@/tmp/.ICE-unix/2378,unix/student-laptop:/tmp/.ICE-unix/2378
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -113,7 +113,7 @@ DISABLE_WAYLAND = 1
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 04d21d9b4a84448bb029f772686338fb
+INVOCATION_ID = c7db6d05ae7b4ecf8f081aeaf26eb397
 # environment
 GDK_PIXBUF_MODULEDIR = /snap/code/97/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # default
@@ -125,7 +125,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 4773
+GIO_LAUNCHED_DESKTOP_FILE_PID = 2732
 # automatic
 %F = $(notdir $%)
 # environment
@@ -139,7 +139,7 @@ PWD = /home/cytech/ProjetS2/guy
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 2162
+SSH_AGENT_PID = 2338
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -191,7 +191,7 @@ SHLVL = 0
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-e17ad7a9-06c9-41f6-b1e5-65407f269934.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-adb64dc7-08e6-42a7-af48-453539fcdfca.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -246,6 +246,7 @@ LC_NUMERIC = en_US.UTF-8
 <F = $(notdir $<)
 # environment
 VIRTUALENVWRAPPER_SCRIPT = /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+ 
 # environment
 LC_MEASUREMENT = en_US.UTF-8
 # environment
@@ -277,7 +278,7 @@ _VIRTUALENVWRAPPER_API =  mkvirtualenv rmvirtualenv lsvirtualenv showvirtualenv 
 # environment
 LANG = C
 # environment
-VSCODE_PID = 4819
+VSCODE_PID = 2777
 # variable set hash-table stats:
 # Load=133/1024=13%, Rehash=0, Collisions=24/158=15%
 
@@ -287,9 +288,9 @@ VSCODE_PID = 4819
 
 # Directories
 
-# . (device 66309, inode 7083172): 28 files, no impossibilities.
+# . (device 66309, inode 7083172): 19 files, no impossibilities.
 
-# 28 files, no impossibilities in 1 directories.
+# 19 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -300,7 +301,6 @@ VSCODE_PID = 4819
 exe: ppm_lib.o compression.o decompression.o conversion.o Menu.o main.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
- 
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 22):
 	gcc  $^ -o $@
@@ -430,12 +430,12 @@ ppm_lib.c:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 37 / storage = 330 B / avg = 8 B
-# current buf: size = 8162 B / used = 330 B / count = 37 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 33 / storage = 304 B / avg = 9 B
+# current buf: size = 8162 B / used = 304 B / count = 33 / avg = 9 B
 
-# strcache performance: lookups = 74 / hit rate = 50%
+# strcache performance: lookups = 65 / hit rate = 49%
 # hash-table stats:
-# Load=37/8192=0%, Rehash=0, Collisions=1/74=1%
-# Finished Make data base on Tue May 31 09:35:05 2022
+# Load=33/8192=0%, Rehash=0, Collisions=1/65=2%
+# Finished Make data base on Wed Jun  1 10:21:44 2022
 
  
