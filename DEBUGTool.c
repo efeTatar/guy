@@ -2,7 +2,7 @@
 #include <time.h>
 int main(){
     PPM_IMG* img = NULL;
-    int x, y, h= 4, w = 4, r, g, b, chance;
+    int x, y, h= 50, w = 50, r, g, b, chance;
     img = ppmNew(w,h, 255, 3);
     ppmDisplay(img);
     for(y=0;y<h;y++){

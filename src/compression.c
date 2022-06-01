@@ -158,6 +158,7 @@ void check_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
         byte = byte << 6;
         gdiff += 32;
         byte = byte | gdiff;
+        //printf("(%u)", byte);
         fwrite(&byte, sizeof(unsigned char), 1, fichier);
         byte = 0;
         rgdiff += 8;
@@ -166,6 +167,7 @@ void check_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
         byte = byte << 4;
         byte = byte | bgdiff;
         fwrite(&byte, sizeof(unsigned char), 1, fichier);
+        printf("(%u)", byte);
         return;
     }
     // Continuity of loop

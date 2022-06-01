@@ -1,24 +1,24 @@
 EXO : exe
 
-ppm_lib.o : ppm_lib.c ppm_lib.h
+save/ppm_lib.o : src/ppm_lib.c src/ppm_lib.h
 	gcc -c $< -o $@
 
-compression.o : compression.c ppm_lib.h
+save/compression.o : src/compression.c src/ppm_lib.h
 	gcc -c $< -o $@
 
-decompression.o : decompression.c ppm_lib.h
+save/decompression.o : src/decompression.c src/ppm_lib.h
 	gcc -c $< -o $@
 
-conversion.o : conversion.c ppm_lib.h
+save/conversion.o : src/conversion.c src/ppm_lib.h
 	gcc -c $< -o $@
 
-Menu.o : Menu.c ppm_lib.h
+save/Menu.o : src/Menu.c src/ppm_lib.h
 	gcc -c $< -o $@
 
-main.o : main.c ppm_lib.h
+save/main.o : src/main.c src/ppm_lib.h
 	gcc -c $< -o $@
 
-exe : ppm_lib.o compression.o decompression.o conversion.o Menu.o main.o
+exe : save/ppm_lib.o save/compression.o save/decompression.o save/conversion.o save/Menu.o save/main.o
 	gcc  $^ -o $@
 
 clean:
