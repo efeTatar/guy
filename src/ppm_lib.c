@@ -74,7 +74,7 @@ PPM_IMG* ppmOpen(char* path){
     // open file in reading mode
     pFile = fopen(path,"rb");
     if(pFile == 0){
-        printf("[ERROR] in openImage : the requested file has not been found (%s) !\n", path);
+        printf("Cette image (%s) n'existe pas ou elle n'est pas bien placée, verifiez qu'elle se trouve bien dans le fichier images.\n", path);
         exit(-1);
     }
     else{

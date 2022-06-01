@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Jun  1 10:21:44 2022
+# Make data base, printed on Wed Jun  1 19:44:41 2022
 
 # Variables
 
@@ -53,7 +53,7 @@ SNAP_DATA = /var/snap/code/97
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:50658
+JOURNAL_STREAM = 8:54331
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # environment
@@ -79,7 +79,7 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 _ = /snap/code/97/usr/share/code/code
 # environment
-MANAGERPID = 2164
+MANAGERPID = 2014
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
@@ -95,7 +95,7 @@ PATH = /opt/gradle/bin:/opt/gradle/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/student-laptop:@/tmp/.ICE-unix/2378,unix/student-laptop:/tmp/.ICE-unix/2378
+SESSION_MANAGER = local/student-laptop:@/tmp/.ICE-unix/2229,unix/student-laptop:/tmp/.ICE-unix/2229
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -113,7 +113,7 @@ DISABLE_WAYLAND = 1
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = c7db6d05ae7b4ecf8f081aeaf26eb397
+INVOCATION_ID = 20f27a326ba2494785fa2d09607dd852
 # environment
 GDK_PIXBUF_MODULEDIR = /snap/code/97/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # default
@@ -125,7 +125,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 2732
+GIO_LAUNCHED_DESKTOP_FILE_PID = 10188
 # automatic
 %F = $(notdir $%)
 # environment
@@ -139,7 +139,7 @@ PWD = /home/cytech/ProjetS2/guy
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 2338
+SSH_AGENT_PID = 2189
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -191,7 +191,7 @@ SHLVL = 0
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-adb64dc7-08e6-42a7-af48-453539fcdfca.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-7e71d815-adba-4360-ba89-06f7d1696e93.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -246,7 +246,6 @@ LC_NUMERIC = en_US.UTF-8
 <F = $(notdir $<)
 # environment
 VIRTUALENVWRAPPER_SCRIPT = /usr/share/virtualenvwrapper/virtualenvwrapper.sh
- 
 # environment
 LC_MEASUREMENT = en_US.UTF-8
 # environment
@@ -278,7 +277,7 @@ _VIRTUALENVWRAPPER_API =  mkvirtualenv rmvirtualenv lsvirtualenv showvirtualenv 
 # environment
 LANG = C
 # environment
-VSCODE_PID = 2777
+VSCODE_PID = 10236
 # variable set hash-table stats:
 # Load=133/1024=13%, Rehash=0, Collisions=24/158=15%
 
@@ -288,9 +287,9 @@ VSCODE_PID = 2777
 
 # Directories
 
-# . (device 66309, inode 7083172): 19 files, no impossibilities.
+# . (device 66309, inode 7083172): 11 files, no impossibilities.
 
-# 19 files, no impossibilities in 1 directories.
+# 11 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -298,7 +297,15 @@ VSCODE_PID = 2777
 
 # Files
 
-exe: ppm_lib.o compression.o decompression.o conversion.o Menu.o main.o
+ 
+save/decompression.o: src/decompression.c src/ppm_lib.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 10):
+	gcc -c $< -o $@
+
+exe: save/ppm_lib.o save/compression.o save/decompression.o save/conversion.o save/Menu.o save/main.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -312,31 +319,6 @@ all:
 #  File does not exist.
 #  File has not been updated.
 
-# Not a target:
-ppm_lib.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-main.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-Menu.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-decompression.o: decompression.c ppm_lib.h
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'makefile', line 10):
-	gcc -c $< -o $@
-
 EXO: exe
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -345,23 +327,39 @@ EXO: exe
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-31 09:34:53.260548379
+#  Last modified 2022-06-01 14:16:03.057608471
 #  File has been updated.
 #  Successfully updated.
 
-compression.o: compression.c ppm_lib.h
+# Not a target:
+src/ppm_lib.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 7):
-	gcc -c $< -o $@
 
-conversion.o: conversion.c ppm_lib.h
+# Not a target:
+src/compression.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 13):
-	gcc -c $< -o $@
+
+# Not a target:
+src/ppm_lib.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+src/main.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+src/conversion.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 .DEFAULT:
@@ -369,18 +367,18 @@ conversion.o: conversion.c ppm_lib.h
 #  Modification time never checked.
 #  File has not been updated.
 
-ppm_lib.o: ppm_lib.c ppm_lib.h
+# Not a target:
+src/Menu.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+save/ppm_lib.o: src/ppm_lib.c src/ppm_lib.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 4):
 	gcc -c $< -o $@
-
-# Not a target:
-decompression.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 clean:
 #  Implicit rule search has not been done.
@@ -391,51 +389,53 @@ clean:
 	rm exe
 
 # Not a target:
-compression.c:
+src/decompression.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-conversion.c:
+save/compression.o: src/compression.c src/ppm_lib.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+#  recipe to execute (from 'makefile', line 7):
+	gcc -c $< -o $@
 
-main.o: main.c ppm_lib.h
+save/main.o: src/main.c src/ppm_lib.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 19):
 	gcc -c $< -o $@
 
-Menu.o: Menu.c ppm_lib.h
+save/conversion.o: src/conversion.c src/ppm_lib.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 13):
+	gcc -c $< -o $@
+
+save/Menu.o: src/Menu.c src/ppm_lib.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 16):
 	gcc -c $< -o $@
 
-# Not a target:
-ppm_lib.c:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 # files hash-table stats:
-# Load=20/1024=2%, Rehash=0, Collisions=1/50=2%
+# Load=20/1024=2%, Rehash=0, Collisions=0/50=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 33 / storage = 304 B / avg = 9 B
-# current buf: size = 8162 B / used = 304 B / count = 33 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 31 / storage = 336 B / avg = 10 B
+# current buf: size = 8162 B / used = 336 B / count = 31 / avg = 10 B
 
-# strcache performance: lookups = 65 / hit rate = 49%
+# strcache performance: lookups = 57 / hit rate = 45%
 # hash-table stats:
-# Load=33/8192=0%, Rehash=0, Collisions=1/65=2%
-# Finished Make data base on Wed Jun  1 10:21:44 2022
+# Load=31/8192=0%, Rehash=0, Collisions=1/57=2%
+# Finished Make data base on Wed Jun  1 19:44:41 2022
 
  
