@@ -24,3 +24,12 @@ exe : save/ppm_lib.o save/compression.o save/decompression.o save/conversion.o s
 clean:
 	rm -f *.o
 	rm exe
+	
+exx : oxe
+	
+save/DEBUGTool.o : src/DEBUGTool.c src/ppm_lib.h
+	gcc -c $< -o $@
+	
+oxe : save/DEBUGTool.o
+	gcc  $^ -o $@
+	
