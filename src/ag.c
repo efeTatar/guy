@@ -1,6 +1,6 @@
 #include "ppm_lib.h"
 
-void debugtool(){
+int main(){
     PPM_IMG* img = NULL;
     int x, y, h= 50, w = 50, r, g, b, chance;
     img = ppmNew(w,h, 255, 3);
@@ -19,5 +19,6 @@ void debugtool(){
     ppmDisplay(img);
     ppmSave(img,"testdsogv");
     ppmClose(img);
+    return 0;
 }
 
