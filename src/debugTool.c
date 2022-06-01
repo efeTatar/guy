@@ -1,5 +1,5 @@
 #include "ppm_lib.h"
-#include <time.h>
+
 int main(){
     PPM_IMG* img = NULL;
     int x, y, h= 50, w = 50, r, g, b, chance;
