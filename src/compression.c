@@ -196,12 +196,12 @@ void check_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimatePointer,
 // w: width
 // h: height 
 void writeHeader(FILE *fichier, PPM_IMG *img){
-    int w = ppmGetWidth (img),
+    unsigned int w = ppmGetWidth (img),
         h = ppmGetHeight(img),
         rng = ppmGetRange (img),
         nbColors = ppmGetColors(img);
-    fwrite(&w, sizeof(unsigned char), 1, fichier);
-    fwrite(&h, sizeof(unsigned char), 1, fichier);
+    fwrite(&w, sizeof(unsigned int), 1, fichier);
+    fwrite(&h, sizeof(unsigned int), 1, fichier);
     fwrite(&rng, sizeof(unsigned char), 1, fichier);
     fwrite(&nbColors, sizeof(unsigned char), 1, fichier);
 }

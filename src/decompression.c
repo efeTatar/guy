@@ -1,10 +1,11 @@
 #include "ppm_lib.h"
 
 void decompressionManager(FILE *fichier){
+    rewind(fichier);
     PPM_IMG *img = NULL;
     unsigned int w, h, rng, nbColours;
-    freadChar(fichier, &w);
-    freadChar(fichier, &h);
+    fread(&w, sizeof(unsigned int), 1, fichier);
+    fread(&h, sizeof(unsigned int), 1, fichier);
     freadChar(fichier, &rng);
     freadChar(fichier, &nbColours);
     img = ppmNew(w, h, rng, nbColours);
@@ -17,24 +18,6 @@ void decompressionManager(FILE *fichier){
     int x = 0, y = 0;
     int c = 0;
     int a = 1;
-    /*for(y=0;y<h;y++){
-        for(x=0;x<w;x++){
-            printf("(%d %d)", x, y);
-            if(c<1){
-                type_determiner(fichier, img, &x, &y, &penultimate, &c,
-                        &ultimate, cache, w, h);
-                ppmWrite(img, x, y, pixel((ultimate).r, (ultimate).g, (ultimate).r));
-            }
-            else{
-                printf("%d", c);
-                ppmWrite(img, x, y, pixel((penultimate).r, (penultimate).g, (penultimate).r));
-                c--;
-            }
-            index = (3*(ultimate).r + 5*(ultimate).g + 7*(ultimate).b)%64;
-            cache[index] = ultimate;
-            penultimate = ultimate;
-        }
-    }*/
     while(a==1){
             if(c<1){
                 type_determiner(fichier, img, &x, &y, &penultimate, &c,
@@ -101,7 +84,7 @@ void detected_EVA_BK_LUMA(FILE *fichier, unsigned int byte, PPM_IMG *img, pixel_
     (*ultimate).r = rDiff + (*penultimate).r;
     bDiff = (byte | 0xF) + gDiff - 8;
     (*ultimate).b = bDiff + (*penultimate).b;
-    printf("(%d %d %d)", (*ultimate).r, (*ultimate).g, (*ultimate).b);
+    //printf("(%d %d %d)", (*ultimate).r, (*ultimate).g, (*ultimate).b);
 }
 
 void detected_EVA_BK_RGB(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structure *ultimate, pixel_structure cache[64]){
