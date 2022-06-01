@@ -58,6 +58,7 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
     }
 
     check_EVA_BLK_DEBUG(fichier, &penultimate, &ultimate, &CIP, cache);
+    free(cache);
 }
 
 // Functions decide what pixel to write
