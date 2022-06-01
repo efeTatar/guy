@@ -8,7 +8,7 @@ int main(){
     for(y=0;y<h;y++){
         for(x=0;x<w;x++){
             chance = rand()%5;
-            if(chance >= 4){
+            if(chance >= 80){
                 r = (rand()%256);
                 g = (rand()%256);
                 b = (rand()%256);

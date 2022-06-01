@@ -22,7 +22,7 @@ void decompressionManager(FILE *fichier){
             if(c<1){
                 type_determiner(fichier, img, &x, &y, &penultimate, &c,
                         &ultimate, cache, w, h);
-                printf("(%d %d)(%d %d %d)", x, y, ultimate.r, ultimate.g, ultimate.b);
+                //printf("(%d %d)(%d %d %d)", x, y, ultimate.r, ultimate.g, ultimate.b);
                 ppmWrite(img, x, y, pixel((ultimate).r, (ultimate).g, (ultimate).b));
             }
             else{
@@ -132,8 +132,8 @@ void type_determiner(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structur
             break;
         case 0x80:
             detected_EVA_BK_LUMA(fichier, byte, img, ultimatePointeur, penultimatePointeur, i, j, cache);
-            printf("\nLUMA");
-            if((*i)>=w){(*i)=0; (*j)++; printf("a");}
+            //printf("\nLUMA");
+            if((*i)>=w){(*i)=0; (*j)++;}
             freadChar(fichier, &byte);
             break;
     }
