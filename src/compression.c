@@ -134,7 +134,7 @@ void check_EVA_BLK_DIFF(FILE *fichier, pixel_structure *penultimatePointer,
         byte = byte | gdiff;
         byte = byte << 2;
         byte = byte | bdiff;
-        fwrite(&byte, sizeof(unsigned char), 1, fichier); 
+        fwrite(&byte, sizeof(unsigned char), 1, fichier);
         return;
     }
     // Continuity of loop
@@ -194,9 +194,9 @@ void check_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimatePointer,
 // w: width
 // h: height 
 void writeHeader(FILE *fichier, PPM_IMG *img){
-    unsigned int w = ppmGetWidth (img),
+    unsigned int w = ppmGetWidth(img),
         h = ppmGetHeight(img),
-        rng = ppmGetRange (img),
+        rng = ppmGetRange(img),
         nbColors = ppmGetColors(img);
     printf("%d %d", w, h);
     fwrite(&w, sizeof(unsigned int), 1, fichier);

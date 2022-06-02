@@ -6,10 +6,10 @@ void decompressionManager(FILE *fichier){
     unsigned int w, h, rng, nbColours;
     fread(&w, sizeof(unsigned int), 1, fichier);
     fread(&h, sizeof(unsigned int), 1, fichier);
-    printf("%d %d", w, h);
     freadChar(fichier, &rng);
     freadChar(fichier, &nbColours);
     img = ppmNew(w, h, rng, nbColours);
+    //printf("%d %d", ppmGetWidth(img), ppmGetHeight(img));
 
     pixel_structure penultimate, ultimate;
     pixel_structure *cache; int index;
@@ -58,16 +58,13 @@ void detected_EVA_BK_INDEX(unsigned int byte, PPM_IMG *img, pixel_structure *ult
 void detected_EVA_BK_DIFF(unsigned int byte, PPM_IMG *img, pixel_structure *ultimate, pixel_structure *penultimate, int *i, int *j, pixel_structure cache[64]){
     int diff;
     //printf("diff ");
-    unsigned byte2 = 207;
-    diff = (byte | byte2) ^ byte2;
+    diff = (byte & 48) >> 4;
     (*ultimate).r = (*penultimate).r - 2 + diff;
 
-    byte2 = 243;
-    diff = (byte | byte2) ^ byte2;
+    diff = (byte & 12) >> 2;
     (*ultimate).g = (*penultimate).g - 2 + diff;
 
-    byte2 = 252;
-    diff = (byte | byte2) ^ byte2;
+    diff = (byte & 3);
     (*ultimate).b = (*penultimate).b - 2 + diff;
 
     ppmWrite(img, (*i), (*j), pixel((*ultimate).r, (*ultimate).g, (*ultimate).r));
