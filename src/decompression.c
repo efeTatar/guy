@@ -26,7 +26,6 @@ void decompressionManager(FILE *fichier){
             else{
                 type_determiner(fichier, img, &x, &y, &penultimate, &c,
                         &ultimate, cache, w, h);
-                //printf("(%d %d)(%d %d %d)", x, y, ultimate.r, ultimate.g, ultimate.b);
                 ppmWrite(img, x, y, pixel((ultimate).r, (ultimate).g, (ultimate).b));
             }
             index = (3*(ultimate).r + 5*(ultimate).g + 7*(ultimate).b)%64;
@@ -43,20 +42,16 @@ void decompressionManager(FILE *fichier){
 void detected_EVA_BK_SAME(unsigned int byte, PPM_IMG *img, pixel_structure *ultimate, pixel_structure *penultimate, int *i, int *j, int w, int *c){
     ppmWrite(img, *i, *j, pixel((*penultimate).r, (*penultimate).g, (*penultimate).r));
     *c = byte - 191 -1;
-    //printf("%d ", *c+1);
-    //printf("%d", *c);
 }
 
 void detected_EVA_BK_INDEX(unsigned int byte, PPM_IMG *img, pixel_structure *ultimate, pixel_structure cache[64], int *i, int *j){
     int index = byte;
-    //printf("index: %d ", index);
     (*ultimate) = cache[index];
     ppmWrite(img, (*i), (*j), pixel((*ultimate).r, (*ultimate).g, (*ultimate).r));
 }
 
 void detected_EVA_BK_DIFF(unsigned int byte, PPM_IMG *img, pixel_structure *ultimate, pixel_structure *penultimate, int *i, int *j, pixel_structure cache[64]){
     int diff;
-    //printf("diff ");
     diff = (byte & 48) >> 4;
     (*ultimate).r = (*penultimate).r - 2 + diff;
 
@@ -81,7 +76,6 @@ void detected_EVA_BK_LUMA(FILE *fichier, unsigned int byte, PPM_IMG *img, pixel_
     (*ultimate).r = rDiff + (*penultimate).r;
     bDiff = (byte & 0xF) + gDiff - 8;
     (*ultimate).b = bDiff + (*penultimate).b;
-    //printf("(%d %d %d)", (*ultimate).r, (*ultimate).g, (*ultimate).b);
 }
 
 void detected_EVA_BK_RGB(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structure *ultimate, pixel_structure cache[64]){
@@ -106,30 +100,24 @@ void type_determiner(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structur
         case 0xC0:
             if(byte == 0xFE){
                 detected_EVA_BK_RGB(fichier, img, i, j, ultimatePointeur, cache);
-                //printf("\nRGB");
                 break;
             }                          
             if(byte  == 0xFF ){
                 detected_EVA_BK_DEBUG();
-                //printf("\nDEBUG");
                 break;
             }
             else{
                 detected_EVA_BK_SAME(byte, img, ultimatePointeur, penultimatePointeur, i, j, w, c);
-                //printf("\nSAME");
             }
             break;
         case 0x00:
             detected_EVA_BK_INDEX(byte, img, ultimatePointeur, cache, i, j);
-            //printf("\nINDEX");
             break;
         case 0x40:
             detected_EVA_BK_DIFF(byte, img, ultimatePointeur, penultimatePointeur, i, j, cache);
-            //printf("\nDIFF");
             break;
         case 0x80:
             detected_EVA_BK_LUMA(fichier, byte, img, ultimatePointeur, penultimatePointeur, i, j, cache);
-            //printf("\nLUMA");
             break;
     }
 }

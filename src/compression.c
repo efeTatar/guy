@@ -61,8 +61,8 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
     free(cache);
 }
 
-// Functions decide what pixel to write
-// Each one checks if they are supposed to write the block they have in their names 
+// Functions decide what pixel block to write
+// Each one checks if they are supposed to write their corresponding blocks
 
 void check_EVA_BLK_SAME(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]){
@@ -148,18 +148,29 @@ void check_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
     int rdiff = (*ultimatePointer).r-(*penultimatePointer).r, 
         gdiff = (*ultimatePointer).g-(*penultimatePointer).g,
         bdiff = (*ultimatePointer).b-(*penultimatePointer).b;
+
+    // check variable is initialised
     int check = 1;
+
+    // Function checks if the difference stays in given intervals, nullifies check if not
     if(gdiff>31 || gdiff<-32){check=0;}
     int rgdiff = rdiff - gdiff, bgdiff = bdiff - gdiff;
     if(rgdiff>7 || rgdiff<-8){check=0;}
     if(bgdiff>7 || bgdiff<-8){check=0;}
+
+    // if check is equal to 1, the function writes the LUMA block
     if(check==1){
+        
+        // First byte is created with corresponding first 2 bits 
         unsigned int byte = 0;
         byte = 2;
         byte = byte << 6;
         gdiff += 32;
+        //6 bits store the difference between ultimate and penultimate green values
         byte = byte | gdiff;
         fwrite(&byte, sizeof(unsigned char), 1, fichier);
+
+        // Second byte is being created storing difference betwenn ultimate and penultimate red and blue values
         byte = 0;
         rgdiff += 8;
         bgdiff += 8;
@@ -175,6 +186,8 @@ void check_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
 
 void check_EVA_BLK_RGB(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]){
+    
+    // If none of the functions was valid, the function writes the ultimate RGB values
     unsigned int byte = 0xFE;
     fwrite(&byte, sizeof(unsigned char), 1, fichier);
     fwrite(&(ultimatePointer->r), sizeof(unsigned char), 1, fichier);
@@ -185,6 +198,7 @@ void check_EVA_BLK_RGB(FILE *fichier, pixel_structure *penultimatePointer,
 
 void check_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimatePointer, 
                         pixel_structure *ultimatePointer, int *CIP_Pointer, pixel_structure cache[64]){
+    // The debug block is only used if the devs see it fit
     unsigned int byte;
     byte = 0xFF;
     fwrite(&byte, sizeof(unsigned char), 1, fichier);
@@ -193,12 +207,13 @@ void check_EVA_BLK_DEBUG(FILE *fichier, pixel_structure *penultimatePointer,
 // Copies header into compression file
 // w: width
 // h: height 
+// rng: range of colours
+// nbColors: number of colours
 void writeHeader(FILE *fichier, PPM_IMG *img){
     unsigned int w = ppmGetWidth(img),
         h = ppmGetHeight(img),
         rng = ppmGetRange(img),
         nbColors = ppmGetColors(img);
-    printf("%d %d", w, h);
     fwrite(&w, sizeof(unsigned int), 1, fichier);
     fwrite(&h, sizeof(unsigned int), 1, fichier);
     fwrite(&rng, sizeof(unsigned char), 1, fichier);
