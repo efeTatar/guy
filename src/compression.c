@@ -31,7 +31,7 @@ void compressionManager(FILE *fichier, PPM_IMG* img){
             // Conversion of decimal value returned by provided functions
             DecimalToHex(Hex, ppmRead(img, x, y));
             HexToRGB(Hex, &ultimate);
-
+            
             // Start of loop
             check_EVA_BLK_SAME(fichier, &penultimate, &ultimate, &CIP, cache);
 
@@ -159,7 +159,6 @@ void check_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
         byte = byte << 6;
         gdiff += 32;
         byte = byte | gdiff;
-        //printf("(%u)", byte);
         fwrite(&byte, sizeof(unsigned char), 1, fichier);
         byte = 0;
         rgdiff += 8;
@@ -168,7 +167,6 @@ void check_EVA_BLK_LUMA(FILE *fichier, pixel_structure *penultimatePointer,
         byte = byte << 4;
         byte = byte | bgdiff;
         fwrite(&byte, sizeof(unsigned char), 1, fichier);
-        printf("(%u)", byte);
         return;
     }
     // Continuity of loop
@@ -200,6 +198,7 @@ void writeHeader(FILE *fichier, PPM_IMG *img){
         h = ppmGetHeight(img),
         rng = ppmGetRange (img),
         nbColors = ppmGetColors(img);
+    printf("%d %d", w, h);
     fwrite(&w, sizeof(unsigned int), 1, fichier);
     fwrite(&h, sizeof(unsigned int), 1, fichier);
     fwrite(&rng, sizeof(unsigned char), 1, fichier);

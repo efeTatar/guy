@@ -42,5 +42,5 @@ int ComparePixels(pixel_structure *penultimate_pixel, pixel_structure *ultimate_
 void freadChar(FILE *fichier, unsigned int *value){
 	unsigned char read;
 	fread(&read, sizeof(unsigned char), 1, fichier);
-	*value = (int)read;
+	*value = (unsigned int)read;
 }

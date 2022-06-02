@@ -6,6 +6,7 @@ void decompressionManager(FILE *fichier){
     unsigned int w, h, rng, nbColours;
     fread(&w, sizeof(unsigned int), 1, fichier);
     fread(&h, sizeof(unsigned int), 1, fichier);
+    printf("%d %d", w, h);
     freadChar(fichier, &rng);
     freadChar(fichier, &nbColours);
     img = ppmNew(w, h, rng, nbColours);
@@ -19,16 +20,15 @@ void decompressionManager(FILE *fichier){
     int c = 0;
     int a = 1;
     while(a==1){
-            if(c<1){
+            if(c>0){
+                ppmWrite(img, x, y, pixel((penultimate).r, (penultimate).g, (penultimate).b));
+                c--;
+            }
+            else{
                 type_determiner(fichier, img, &x, &y, &penultimate, &c,
                         &ultimate, cache, w, h);
                 //printf("(%d %d)(%d %d %d)", x, y, ultimate.r, ultimate.g, ultimate.b);
                 ppmWrite(img, x, y, pixel((ultimate).r, (ultimate).g, (ultimate).b));
-            }
-            else{
-                //printf("%d", c);
-                ppmWrite(img, x, y, pixel((penultimate).r, (penultimate).g, (penultimate).b));
-                c--;
             }
             index = (3*(ultimate).r + 5*(ultimate).g + 7*(ultimate).b)%64;
             cache[index] = ultimate;
@@ -44,6 +44,7 @@ void decompressionManager(FILE *fichier){
 void detected_EVA_BK_SAME(unsigned int byte, PPM_IMG *img, pixel_structure *ultimate, pixel_structure *penultimate, int *i, int *j, int w, int *c){
     ppmWrite(img, *i, *j, pixel((*penultimate).r, (*penultimate).g, (*penultimate).r));
     *c = byte - 191 -1;
+    //printf("%d ", *c+1);
     //printf("%d", *c);
 }
 
@@ -80,9 +81,9 @@ void detected_EVA_BK_LUMA(FILE *fichier, unsigned int byte, PPM_IMG *img, pixel_
     gDiff = byte - 32;
     (*ultimate).g = gDiff + (*penultimate).g;
     freadChar(fichier, &byte);
-    rDiff = (byte | 0xF0) + gDiff - 8;
+    rDiff = ((byte & 0xF0)>>4)+ gDiff - 8;
     (*ultimate).r = rDiff + (*penultimate).r;
-    bDiff = (byte | 0xF) + gDiff - 8;
+    bDiff = (byte & 0xF) + gDiff - 8;
     (*ultimate).b = bDiff + (*penultimate).b;
     //printf("(%d %d %d)", (*ultimate).r, (*ultimate).g, (*ultimate).b);
 }
@@ -133,8 +134,6 @@ void type_determiner(FILE *fichier, PPM_IMG *img, int *i, int *j, pixel_structur
         case 0x80:
             detected_EVA_BK_LUMA(fichier, byte, img, ultimatePointeur, penultimatePointeur, i, j, cache);
             //printf("\nLUMA");
-            if((*i)>=w){(*i)=0; (*j)++;}
-            freadChar(fichier, &byte);
             break;
     }
 }
