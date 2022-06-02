@@ -18,15 +18,31 @@ void decompressionManager(FILE *fichier){
     int x = 0, y = 0;
     int c = 0;
     int a = 1;
+    printf("Would you like to render your image black and white?");
+    int bnw = 0;
+    scanf("%d", &bnw);
+    int greyscale;
     while(a==1){
             if(c>0){
-                ppmWrite(img, x, y, pixel((penultimate).r, (penultimate).g, (penultimate).b));
+                if(bnw==1){
+                    greyscale = 0.3 * (penultimate).r + 0.59 * (penultimate).g + 0.11 * (penultimate).b;
+                    ppmWrite(img, x, y, pixel(greyscale, greyscale, greyscale));
+                }
+                else{
+                    ppmWrite(img, x, y, pixel((penultimate).r, (penultimate).g, (penultimate).b));
+                }
                 c--;
             }
             else{
                 type_determiner(fichier, img, &x, &y, &penultimate, &c,
                         &ultimate, cache, w, h);
-                ppmWrite(img, x, y, pixel((ultimate).r, (ultimate).g, (ultimate).b));
+                if(bnw==1){
+                    greyscale = 0.3 * (ultimate).r + 0.59 * (ultimate).g + 0.11 * (ultimate).b;
+                    ppmWrite(img, x, y, pixel(greyscale, greyscale, greyscale));
+                }
+                else{
+                    ppmWrite(img, x, y, pixel((ultimate).r, (ultimate).g, (ultimate).b));
+                }
             }
             index = (3*(ultimate).r + 5*(ultimate).g + 7*(ultimate).b)%64;
             cache[index] = ultimate;
