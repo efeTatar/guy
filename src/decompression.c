@@ -9,7 +9,6 @@ void decompressionManager(FILE *fichier){
     freadChar(fichier, &rng);
     freadChar(fichier, &nbColours);
     img = ppmNew(w, h, rng, nbColours);
-    //printf("%d %d", ppmGetWidth(img), ppmGetHeight(img));
 
     pixel_structure penultimate, ultimate;
     pixel_structure *cache; int index;

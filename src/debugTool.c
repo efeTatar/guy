@@ -7,7 +7,6 @@ void debugtool(){
     img = ppmNew(w,h, 255, 3);
     ppmDisplay(img);
     int a = 0;
-    printf("You've activated the debugging tool meant for the developers");
     for(y=0;y<h;y++){
         for(x=0;x<w;x++){
             /*chance = rand()%100;
