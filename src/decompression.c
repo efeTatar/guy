@@ -37,9 +37,11 @@ void decompressionManager(FILE *fichier){
     // greyscale is the variable used to compute grey values if the image is to be rendered in black and white
     int greyscale;
 
-    //
+    // Image decompression loop
     while(a==1){
+            // The function checks if it has to write an identical pixel
             if(c>0){
+                // It either turns it to grey or not before writing
                 if(bnw==1){
                     greyscale = 0.3 * (penultimate).r + 0.59 * (penultimate).g + 0.11 * (penultimate).b;
                     ppmWrite(img, x, y, pixel(greyscale, greyscale, greyscale));
@@ -50,8 +52,10 @@ void decompressionManager(FILE *fichier){
                 c--;
             }
             else{
+                // determines the new block type
                 type_determiner(fichier, img, &x, &y, &penultimate, &c,
                         &ultimate, cache, w, h);
+                // It either turns it to grey or not before writing
                 if(bnw==1){
                     greyscale = 0.3 * (ultimate).r + 0.59 * (ultimate).g + 0.11 * (ultimate).b;
                     ppmWrite(img, x, y, pixel(greyscale, greyscale, greyscale));
@@ -60,11 +64,15 @@ void decompressionManager(FILE *fichier){
                     ppmWrite(img, x, y, pixel((ultimate).r, (ultimate).g, (ultimate).b));
                 }
             }
+            // Puts ultimate pixel into the cache
             index = (3*(ultimate).r + 5*(ultimate).g + 7*(ultimate).b)%64;
             cache[index] = ultimate;
+            // Sets penultimate pixel to the ultimate one
             penultimate = ultimate;
+            // Moves to the next pixel
             x++;
             if((x)>=w){(x)=0; (y)++;}
+            // Checks if the image is done
             if(y==h){a=0;}
     }
     ppmSave(img, "decompressedImage");
