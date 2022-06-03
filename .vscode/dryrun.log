@@ -1,11 +1,12 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/cytech/ProjetS2/guy'
+gcc -c src/debugTool.c -o save/debugTool.o
 gcc -c src/ppm_lib.c -o save/ppm_lib.o
 gcc -c src/compression.c -o save/compression.o
 gcc -c src/decompression.c -o save/decompression.o
 gcc -c src/conversion.c -o save/conversion.o
 gcc -c src/Menu.c -o save/Menu.o
 gcc -c src/main.c -o save/main.o
-gcc  save/ppm_lib.o save/compression.o save/decompression.o save/conversion.o save/Menu.o save/main.o -o exe
+gcc  save/debugTool.o save/ppm_lib.o save/compression.o save/decompression.o save/conversion.o save/Menu.o save/main.o -o exe
 make: Leaving directory '/home/cytech/ProjetS2/guy'
  

@@ -44,3 +44,4 @@ void freadChar(FILE *fichier, unsigned int *value){
 	fread(&read, sizeof(unsigned char), 1, fichier);
 	*value = (unsigned int)read;
 }
+
