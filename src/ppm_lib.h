@@ -206,6 +206,7 @@
                     pixel_structure *ultimatePointeur, pixel_structure cache[64], unsigned int w, unsigned int h);
     void freadChar(FILE *fichier, unsigned int *value);
     int Menu();
+    void debugtool();
     
 #endif
 

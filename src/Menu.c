@@ -1,12 +1,14 @@
 #include "ppm_lib.h"
+#include <unistd.h>
 
 int Menu(){
     int choix;
     printf("\n                                            || DE(COM)PRESSION ||\nDans ce programme, vous aurez la possibilité de compresser une image puis ensuite de pouvoir la decompresser.\n                                            Que voulez vous faire :\n          -COMPRESSION (tapez 1).                                     -DECOMPRESSION (tapez 2);\n");
     scanf("%d",&choix);
-    while(choix != 1 && choix != 2 && choix != 3){
-        printf("Erreur, veuillez choisir un nombre entre 0 et 2.\n");
-        scanf("%d",&choix);
+    while(choix>3 || choix<1){
+        usleep(10); 
+        printf("\nErreur, veuillez choisir un nombre entre 1 et 2.");
+        scanf("%d", &choix);
     }
     switch(choix){
         case 1:
