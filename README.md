@@ -24,4 +24,5 @@ You will be asked whether you want your image to be rendered in black and white 
 Enter "1" if you wish so, if not, any other input will do.  
 
 ##Credits
-Efe Tatar - Nathan Signoud
+Efe Tatar, tatarefe@cy-tech.fr  
+Nathan Signoud, signoudnat@cy-tech.fr
