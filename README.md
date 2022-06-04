@@ -17,11 +17,14 @@ Than you must enter the name of the compressed file you wish to obtain.
 The compressed file will appear in the general folder.  
   
 In order to decompress, you must simply enter the name of the compressed file.  
-This file must be in the general folder and obtain trough this program.  
-Than enter the name of the image you wish to obtain.  
+This file must be in the general folder and obtained through this program.  
+Then enter the name of the image you wish to obtain.  
 The decompressed image will appear in the general folder.  
 You will be asked whether you want your image to be rendered in black and white or not.  
 Enter "1" if you wish so, if not, any other input will do.  
+
+##WARNING
+If you do not remove images from the main folder, files may be overwritten if the user gives identical names.
 
 ##Credits
 Efe Tatar, tatarefe@cy-tech.fr  
