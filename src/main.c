@@ -1,12 +1,15 @@
 #include "ppm_lib.h"
 
+// Manages the program
 int main(){
     PPM_IMG* img = NULL;
     FILE *fichier = NULL;
     char nom[1000], autreNom[1000], *Init = NULL, *cible = NULL;;
     int i, taille, choix;
+    // Asks user if they want to compress or decompress
     choix = Menu();
     switch(choix){
+        // Compression and naming process
         case 1: 
             scanf("%s", nom);
             taille = strlen(nom);
@@ -27,8 +30,9 @@ int main(){
             compressionManager(fichier, img);
             fclose(fichier);
             ppmClose(img);
-            printf("\nCOMPILED\n");
+            printf("\nCOMPRESSED FILE COMPILED\n");
             break;
+        // Decompression and naming process
         case 0:
             scanf("%s",autreNom);
             taille = strlen(autreNom);
@@ -39,7 +43,7 @@ int main(){
             fichier = fopen(cible, "rb");
             decompressionManager(fichier);
             fclose(fichier);
-            printf("SAVED");
+            printf("\nIMAGE COMPILED\n");
             break;
     }
     free(Init);
