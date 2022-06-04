@@ -3,11 +3,13 @@
 // Manages the decompression precess
 void decompressionManager(FILE *fichier){
     rewind(fichier);
+    // Will be used when we will save the picture.
+    char name[1000], *path = NULL;
     // Creates new pointer and variables for the image
     PPM_IMG *img = NULL;
     // width, height, rang, number of colours
     unsigned int w, h, rng, nbColours;
-    // Tjhe function extracts values from bytes and creates new image
+    // The function extracts values from bytes and creates new image
     fread(&w, sizeof(unsigned int), 1, fichier);
     fread(&h, sizeof(unsigned int), 1, fichier);
     freadChar(fichier, &rng);
@@ -29,7 +31,7 @@ void decompressionManager(FILE *fichier){
     int a = 1;
 
     // The user can render the image in black and white
-    printf("Would you like to render your image black and white?");
+    printf("Would you like to render your image black and white? (0 for colored and 1 for Black&White)\n");
     // bnw (black and white) is set to a user input 
     // setting bnw to 1 will render the image black and white
     int bnw = 0;
@@ -75,7 +77,11 @@ void decompressionManager(FILE *fichier){
             // Checks if the image is done
             if(y==h){a=0;}
     }
-    ppmSave(img, "decompressedImage");
+    printf("How do you want to name your unzipped image ?\n");
+    scanf("%s", name);
+    path = nameToPath(name, 0);
+    ppmSave(img, path);
+    free(path);
     free(cache);
 }
 

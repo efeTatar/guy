@@ -3,19 +3,19 @@
 
 int Menu(){
     char choix;
-    printf("\n                                            || DE(COM)PRESSION ||\nDans ce programme, vous aurez la possibilité de compresser une image puis ensuite de pouvoir la decompresser.\n                                            Que voulez vous faire :\n          -COMPRESSION (tapez 1).                                     -DECOMPRESSION (tapez 2);\n");
+    printf("\n                                                Welcome into\n                                            || DE(COM)PRESSION ||\nIn this program, you will have the possibility either zip a picture or unzip a compressed file.\n                                            What do you want to do ? :\n          -COMPRESSION (type 1).                                     -DECOMPRESSION (type 2).\n");
     scanf("%c",&choix);
     while(choix!='1' && choix!='2'){
         usleep(10); 
-        printf("\nErreur, veuillez choisir un nombre entre 1 et 2.");
+        printf("\nError, please choose a number beetwen 1 and 2.");
         scanf("%c", &choix);
     }
     switch(choix){
         case '1':
-            printf("\n| COMPRESSION |\nQuelle image voulez vous compresser (veuillez a bien deposer une image au format PPM).\n");
+            printf("\n| COMPRESSION |\nWich picture would you want to use (please be careful, only upload PPM).\n");
             return 1;
         case '2':
-            printf("\n| DECOMPRESSION |\nQuel fichier voulez-vous decompresser : ");
+            printf("\n| DECOMPRESSION |\nWich file would you want to unzip : ");
             return 0;
         default: 
             printf("ERROR");

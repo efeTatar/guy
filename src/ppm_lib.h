@@ -207,6 +207,7 @@
     void freadChar(FILE *fichier, unsigned int *value);
     int Menu();
     void debugtool();
+    char* nameToPath(char nom[1000], int choix);
     
 #endif
 

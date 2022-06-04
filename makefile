@@ -25,5 +25,5 @@ exe : save/debugTool.o save/ppm_lib.o save/compression.o save/decompression.o sa
 	gcc  $^ -o $@
 
 clean:
-	rm -f *.o
+	rm -f save/*.o
 	rm exe
