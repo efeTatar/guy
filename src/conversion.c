@@ -54,27 +54,28 @@ void freadChar(FILE *fichier, unsigned int *value){
 	*value = (unsigned int)read;
 }
 
-char* nameToPath(char nom[1000], int choix){
+// Turns a name into a Path either for the pictures file, either for the compressed file
+char* nameToPath(char nom[1000], int choix){ 
+	// choix = 0 return a pictures/name string   and chox = 1 return a compress/name string 
     char *path, Init[17];
     int i, taille;
     Init[0] = 'p'; Init[1] = 'i'; Init[2] = 'c'; Init[3] = 't'; Init[4] = 'u'; Init[5] = 'r'; Init[6] = 'e'; Init[7] = 's'; Init[8] = '/'; Init[9] = 'c'; Init[10] = 'o'; Init[11] = 'm'; Init[12] = 'p'; Init[13] = 'r'; Init[14] = 'e'; Init[15] = 's'; Init[16] = 's'; Init[17] = '/';
-    taille = strlen(nom) + 9;
+	taille = strlen(nom) + 9;
     path = malloc((taille)*sizeof(char));
     if(choix == 0){
         for(i=0;i<9;i++){
-            path[i] = Init[i];
+            path[i] = Init[i]; //Adds the "pictures/" path if choix == 0
         }
     }
     else if(choix == 1){
         for(i=0;i<9;i++){
-            path[i] = Init[i+9];
+            path[i] = Init[i+9]; //Adds the "compress/" path if choix == 1
         }
     }
     for(i=0;i<taille-9;i++){
-        path[i+9] = nom[i];
+        path[i+9] = nom[i]; //Adds the name after the good path
         
     }
-	path[taille] = '\0';
-	printf("name = %s || path = %s",nom, path);
+	path[taille] = '\0'; // Adds the final charater to avoid problem and corruption.
     return path;
 }
